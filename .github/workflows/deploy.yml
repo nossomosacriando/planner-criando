@@ -24,12 +24,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Generate config.js from GitHub Secrets
+      - name: Generate config.js from GitHub Secrets or Variables
         run: |
+          URL="${{ secrets.SUPABASE_URL || vars.SUPABASE_URL }}"
+          KEY="${{ secrets.SUPABASE_ANON_KEY || vars.SUPABASE_ANON_KEY }}"
           echo "window.ENV = {" > config.js
-          echo "  SUPABASE_URL: '${{ secrets.SUPABASE_URL }}'," >> config.js
-          echo "  SUPABASE_ANON_KEY: '${{ secrets.SUPABASE_ANON_KEY }}'" >> config.js
+          echo "  SUPABASE_URL: '$URL'," >> config.js
+          echo "  SUPABASE_ANON_KEY: '$KEY'" >> config.js
           echo "};" >> config.js
+
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
