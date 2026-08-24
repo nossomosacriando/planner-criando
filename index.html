@@ -898,15 +898,18 @@
 <div class="modal-foot"><button class="btn" type="button" onclick="closeModal('editBucketModal')">Cancelar</button><button class="btn primary" type="button" onclick="saveBucketName()">Salvar Coluna</button></div>
 </div></div>
 
-<div id="changePasswordModal" class="modal-backdrop" onclick="backdrop(event,'changePasswordModal')"><div class="modal">
+<div id="changePasswordModal" class="modal-backdrop" onclick="backdrop(event,'changePasswordModal')"><div class="modal" style="max-width:400px;">
 <div class="modal-head"><h2>Alterar Senha</h2><button class="close" type="button" onclick="closeModal('changePasswordModal')">×</button></div>
 <div class="modal-body">
   <div class="form-group">
-    <label>Senha Antiga</label>
-    <div class="password-wrapper">
-      <input id="oldPasswordInput" type="password" class="input" placeholder="Digite sua senha antiga">
-      <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('oldPasswordInput', this)" title="Exibir/ocultar senha">👁️</button>
+    <label>Sua Pergunta Secreta</label>
+    <div id="changePassSecurityQuestion" style="padding:10px; background:var(--bg-card,#f8fafc); border:1px solid var(--border,#e2e8f0); border-radius:8px; font-weight:600; font-size:13px; color:var(--text,#1e293b);">
+      Carregando pergunta...
     </div>
+  </div>
+  <div class="form-group">
+    <label>Resposta Secreta de Segurança</label>
+    <input id="changePassSecurityAnswerInput" class="input" placeholder="Digite sua resposta secreta">
   </div>
   <div class="form-group">
     <label>Nova Senha</label>
@@ -1021,9 +1024,9 @@ const STATUSES=[
 {id:"backlog",name:"Backlog",dot:"backlog"},{id:"andamento",name:"Em andamento",dot:"andamento"},
 {id:"testes",name:"Em testes",dot:"testes"},{id:"pausado",name:"Pausado",dot:"pausado"},{id:"concluido",name:"Concluído",dot:"concluido"}];
 let members=[
-{id:"a1111111-1111-1111-1111-111111111111",username:"Carlos",password:"S&nha@2026",security_question:"Qual o nome da sua primeira escola ou animal de estimação?",security_answer:"planner",role_level:"master",name:"Carlos Santana",phone:"16993669115",role:"Responsável por O Leitor · apoio em O Lobby e Lime Verso"},
-{id:"c3333333-3333-3333-3333-333333333333",username:"Will",password:"S&nha@123",security_question:"Qual a sua cor favorita?",security_answer:"azul",role_level:"moderator",name:"Willian Gonçalves",phone:"1693575472",role:"Responsável por Harvast Words · apoio em O Lobby"},
-{id:"b2222222-2222-2222-2222-222222222222",username:"Davi",password:"S&nha@123",security_question:"Qual o nome da sua cidade natal?",security_answer:"franca",role_level:"user",name:"Davi Silveira",phone:"35999976395",role:"Responsável por Lime Verso · apoio em O Lobby"}];
+{id:"a1111111-1111-1111-1111-111111111111",username:"Carlos",password:"S&nha@2026",security_question:"Qual o nome do seu melhor amigo?",security_answer:"aroldo",role_level:"master",name:"Carlos Santana",phone:"16993669115",role:"Responsável por O Leitor · apoio em O Lobby e Lime Verso"},
+{id:"c3333333-3333-3333-3333-333333333333",username:"Will",password:"S&nha@123",security_question:"Qual o nome do seu cachorro?",security_answer:"loki",role_level:"moderator",name:"Willian Gonçalves",phone:"1693575472",role:"Responsável por Harvast Words · apoio em O Lobby"},
+{id:"b2222222-2222-2222-2222-222222222222",username:"Davi",password:"S&nha@123",security_question:"Qual o nome do seu primeiro professor de cálculo?",security_answer:"renato",role_level:"user",name:"Davi Silveira",phone:"35999976395",role:"Responsável por Lime Verso · apoio em O Lobby"}];
 let tasks=[
 {id:"1",project:"harvast",title:"Conectando o jogo online",desc:"Implementar e estruturar a conexão online do jogo.",status:"andamento",start:"2026-05-24",end:"2026-07-06",members:["c3333333-3333-3333-3333-333333333333"]},
 {id:"2",project:"leitor",title:"Globalização",desc:"Trabalhar a globalização e expansão do projeto.",status:"pausado",start:"2026-05-18",end:"2026-06-01",members:["a1111111-1111-1111-1111-111111111111"]},
@@ -1440,9 +1443,16 @@ function renderTeam(){
 }
 
 window.openChangePasswordModal = function(){
-  document.getElementById("oldPasswordInput").value = "";
-  document.getElementById("newPasswordInput").value = "";
-  document.getElementById("confirmPasswordInput").value = "";
+  let activeMem = getActiveMember();
+  let qEl = document.getElementById("changePassSecurityQuestion");
+  let aInp = document.getElementById("changePassSecurityAnswerInput");
+  if (aInp) aInp.value = "";
+  if (document.getElementById("newPasswordInput")) document.getElementById("newPasswordInput").value = "";
+  if (document.getElementById("confirmPasswordInput")) document.getElementById("confirmPasswordInput").value = "";
+
+  if (qEl) {
+    qEl.textContent = activeMem?.security_question || "Nenhuma pergunta secreta cadastrada para este usuário.";
+  }
   show("changePasswordModal");
 };
 function openChangePasswordModal(){ window.openChangePasswordModal(); }
@@ -1464,29 +1474,32 @@ window.logout = function() {
 function logout(){ window.logout(); }
 
 async function submitChangePassword(){
-  let oldPass = document.getElementById("oldPasswordInput").value.trim();
-  let newPass = document.getElementById("newPasswordInput").value.trim();
-  let confirmPass = document.getElementById("confirmPasswordInput").value.trim();
-
-  if (!oldPass || !newPass || !confirmPass) {
-    return toast("Preencha todos os campos de senha.");
-  }
-  if (newPass !== confirmPass) {
-    return toast("A nova senha e a confirmação não coincidem.");
-  }
-
   let activeMem = getActiveMember();
   if (!activeMem) {
     return toast("Erro ao identificar usuário ativo.");
   }
 
-  if (activeMem.password && activeMem.password !== oldPass) {
-    return toast("Senha antiga incorreta.");
+  let typedAnswer = (document.getElementById("changePassSecurityAnswerInput")?.value || "").trim().toLowerCase();
+  let storedAnswer = (activeMem.security_answer || "").trim().toLowerCase();
+  let newPass = document.getElementById("newPasswordInput").value.trim();
+  let confirmPass = document.getElementById("confirmPasswordInput").value.trim();
+
+  if (!typedAnswer) {
+    return toast("Por favor, digite a resposta secreta.");
+  }
+  if (storedAnswer && typedAnswer !== storedAnswer) {
+    return toast("Resposta secreta incorreta!");
+  }
+  if (!newPass || !confirmPass) {
+    return toast("Informe e confirme a nova senha.");
+  }
+  if (newPass !== confirmPass) {
+    return toast("A nova senha e a confirmação não coincidem.");
   }
 
   if (window.PlannerDataService && window.PlannerDataService.MembersService.changePassword) {
     try {
-      let res = await window.PlannerDataService.MembersService.changePassword(activeMem.id, oldPass, newPass);
+      let res = await window.PlannerDataService.MembersService.changePassword(activeMem.id, "", newPass);
       if (res.success) {
         activeMem.password = newPass;
         let mObj = members.find(x => x.id === activeMem.id);
@@ -1930,7 +1943,7 @@ function findMemberByUserKey(userKey) {
   ) || members[0];
 }
 
-function onResetUserChange(userKey) {
+window.onResetUserChange = function(userKey) {
   let m = findMemberByUserKey(userKey);
   let qEl = document.getElementById("displayedSecurityQuestion");
   let aInp = document.getElementById("resetSecurityAnswerInput");
@@ -1938,9 +1951,10 @@ function onResetUserChange(userKey) {
   if (qEl) {
     qEl.textContent = m?.security_question || "Nenhuma pergunta secreta cadastrada para este usuário.";
   }
-}
+};
+function onResetUserChange(userKey){ window.onResetUserChange(userKey); }
 
-async function openForgotPasswordModal() {
+window.openForgotPasswordModal = async function() {
   // Atualiza a lista de membros do Supabase se disponível
   if (window.PlannerDataService && window.PlannerDataService.MembersService) {
     try {
@@ -1958,7 +1972,7 @@ async function openForgotPasswordModal() {
   }
 
   let initialKey = userSelect ? userSelect.value : (members[0]?.id || "");
-  onResetUserChange(initialKey);
+  window.onResetUserChange(initialKey);
 
   document.getElementById("secretQuestionStep1").style.display = "block";
   document.getElementById("secretQuestionStep2").style.display = "none";
@@ -1968,9 +1982,10 @@ async function openForgotPasswordModal() {
   document.getElementById("resetConfirmPasswordInput").value = "";
 
   show("forgotPasswordModal");
-}
+};
+function openForgotPasswordModal(){ window.openForgotPasswordModal(); }
 
-function verifySecretAnswer() {
+window.verifySecretAnswer = function() {
   let selectedProfileKey = document.getElementById("resetUserSelect").value;
   let typedAnswer = document.getElementById("resetSecurityAnswerInput").value.trim().toLowerCase();
   let targetMember = findMemberByUserKey(selectedProfileKey);
@@ -1993,9 +2008,10 @@ function verifySecretAnswer() {
   document.getElementById("btnSubmitResetPassword").style.display = "inline-block";
 
   toast("Resposta secreta confirmada! Digite sua nova senha.");
-}
+};
+function verifySecretAnswer(){ window.verifySecretAnswer(); }
 
-async function submitForgotPasswordReset() {
+window.submitForgotPasswordReset = async function() {
   let selectedProfileKey = document.getElementById("resetUserSelect").value;
   let newPass = document.getElementById("resetNewPasswordInput").value.trim();
   let confirmPass = document.getElementById("resetConfirmPasswordInput").value.trim();
@@ -2035,7 +2051,8 @@ async function submitForgotPasswordReset() {
     document.getElementById("loginPasswordInput").value = newPass;
     document.getElementById("loginPasswordInput").focus();
   }
-}
+};
+function submitForgotPasswordReset(){ window.submitForgotPasswordReset(); }
 
 function openProjectModal(){
   if (!isAuthenticated) {
