@@ -673,15 +673,18 @@ async function loadBaseData() {
     }
   }
   
-  if (PROJECTS.length > 0) {
-    if (!selectedProject || !PROJECTS.find(p => p.id === selectedProject)) {
-      selectedProject = PROJECTS[0].id;
+  let visibleProjects = getVisibleProjects();
+  if (visibleProjects.length > 0) {
+    if (!selectedProject || !visibleProjects.find(p => p.id === selectedProject)) {
+      selectedProject = visibleProjects[0].id;
     }
+  } else if (PROJECTS.length > 0) {
+    selectedProject = PROJECTS[0].id;
   }
   
   P = Object.fromEntries(PROJECTS.map(x=>[x.id,x]));
-
   S = Object.fromEntries(STATUSES.map(x=>[x.id,x]));
+
   
   fill();
   renderTeam();
