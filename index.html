@@ -638,11 +638,14 @@ async function loadBaseData() {
     }
   }
   
-  if (PROJECTS.length > 0 && !PROJECTS.find(p => p.id === selectedProject)) {
-    selectedProject = PROJECTS[0].id;
+  if (PROJECTS.length > 0) {
+    if (!selectedProject || !PROJECTS.find(p => p.id === selectedProject)) {
+      selectedProject = PROJECTS[0].id;
+    }
   }
   
   P = Object.fromEntries(PROJECTS.map(x=>[x.id,x]));
+
   S = Object.fromEntries(STATUSES.map(x=>[x.id,x]));
   
   fill();
@@ -675,12 +678,13 @@ function selectProject(id){selectedProject=id;fill();render()}
 
 function render(){
   let q=document.getElementById("search").value.toLowerCase(),sf=document.getElementById("statusFilter").value,mf=document.getElementById("memberFilter").value;
-  let list=tasks.filter(t=>t.project==selectedProject&&( !q||(t.title+" "+t.desc).toLowerCase().includes(q))&&(!sf||t.status==sf)&&(!mf||t.members?.includes(mf)));
+  let list=tasks.filter(t=>t.project==selectedProject&&( !q||(t.title+" "+(t.desc||"")).toLowerCase().includes(q))&&(!sf||t.status==sf)&&(!mf||t.members?.includes(mf)));
   document.getElementById("board").innerHTML=STATUSES.map(s=>{
    let a=list.filter(t=>t.status==s.id);
-   return `<section class="column"><div class="column-head"><div class="column-title"><span class="dot ${s.dot}"></span>${s.name}<span class="count">${a.length}</span></div><div class="column-actions"><button class="small-icon" onclick="openTask(null,'${s.id}')">＋</button><button class="small-icon">⋮</button></div></div><div class="cards" ondragover="event.preventDefault()" ondrop="drop(event,'${s.id}')">${a.length?a.map(card).join(""):`<div class="empty"><div class="empty-icon">${s.id=="concluido"?"✓":"+"}</div><b>${s.id=="concluido"?"Nenhuma tarefa concluída":"Nenhuma tarefa aqui"}</b><span>${s.id=="concluido"?"Ótimo trabalho! 🎉":"Adicione uma nova tarefa para começar."}</span></div>`}</div><button class="add-task" onclick="openTask(null,'${s.id}')">＋ &nbsp;Adicionar tarefa</button></section>`
+   return `<section class="column"><div class="column-head"><div class="column-title"><span class="dot ${s.dot}"></span>${s.name}<span class="count">${a.length}</span></div><div class="column-actions"><button class="small-icon" onclick="openTask(null,'${s.id}')">＋</button><button class="small-icon">⋮</button></div></div><div class="cards" ondragover="event.preventDefault()" ondrop="drop(event,'${s.id}')">${a.length?a.map(card).join(""):`<div class="empty"><div class="empty-icon">${s.id=="concluido"?"✓":"+"}</div><b>${s.id=="concluido"?"Nenhuma tarefa concluída":"Nenhuma tarefa aqui"}</b><span>${s.id=="concluido"?"Ótimo trabalho! 🎉":"Adicione uma nova tarefa para começar."}</span></div>`}</div><button class="add-task" onclick="openTask(null,'${s.id}')">＋ &nbsp;Adicionar tarefa</button></section>`;
   }).join("");
 }
+
 
 function card(t){
   let av=(t.members||[]).map((id,i)=>{let m=members.find(x=>x.id==id);return m?`<div class="mini-avatar" title="${esc(m.name)}">${initials(m.name)}</div>`:""}).join("");
