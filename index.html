@@ -243,6 +243,230 @@
   font-size:11px;
   background:#fafbfc;
 }
+.password-wrapper{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.password-wrapper .input{
+  padding-right:38px;
+}
+.password-toggle-btn{
+  position:absolute;
+  right:8px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-size:14px;
+  color:#707482;
+  padding:4px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.password-toggle-btn:hover{
+  color:#2563eb;
+}
+.remember-me-wrap{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  color:#4a4d58;
+  margin-top:10px;
+  cursor:pointer;
+  user-select:none;
+}
+.remember-me-wrap input[type="checkbox"]{
+  width:15px;
+  height:15px;
+  cursor:pointer;
+}
+.btn-logout{
+  height:32px;
+  border:1px solid #f87171;
+  border-radius:7px;
+  background:#fef2f2;
+  color:#dc2626;
+  font-size:11px;
+  font-weight:600;
+  padding:0 10px;
+  margin-left:8px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  transition:all 0.15s ease;
+}
+.btn-logout:hover{
+  background:#fee2e2;
+  border-color:#ef4444;
+}
+.user-menu-container{
+  position:relative;
+  display:inline-block;
+  margin-left:8px;
+}
+.btn-user-menu{
+  width:32px;
+  height:32px;
+  border:1px solid #dfe1e8;
+  border-radius:7px;
+  background:#fff;
+  color:#4d5160;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:all 0.15s ease;
+}
+.btn-user-menu:hover, .btn-user-menu.active{
+  background:#f5f6fa;
+  border-color:#cfd2dc;
+}
+.user-dropdown-menu{
+  display:none;
+  position:absolute;
+  right:0;
+  top:calc(100% + 6px);
+  width:210px;
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  border-radius:10px;
+  box-shadow:0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+  padding:6px;
+  z-index:100;
+}
+.user-dropdown-menu.show{
+  display:block;
+}
+.user-dropdown-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  padding:8px 12px;
+  border:none;
+  background:none;
+  border-radius:6px;
+  font-size:12px;
+  color:#334155;
+  cursor:pointer;
+  text-align:left;
+  transition:background 0.15s ease;
+}
+.user-dropdown-item:hover{
+  background:#f1f5f9;
+}
+.user-dropdown-item.danger{
+  color:#dc2626;
+}
+.user-dropdown-item.danger:hover{
+  background:#fef2f2;
+}
+.user-dropdown-divider{
+  height:1px;
+  background:#e2e8f0;
+  margin:4px 0;
+}
+.user-dropdown-status{
+  padding:8px 12px;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.bucket-dropdown-menu{
+  display:none;
+  position:absolute;
+  right:10px;
+  top:38px;
+  width:160px;
+  background:#ffffff;
+  border:1px solid #e2e8f0;
+  border-radius:8px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  padding:4px;
+  z-index:90;
+}
+.bucket-dropdown-menu.show{
+  display:block;
+}
+.card-checkbox{
+  width:16px;
+  height:16px;
+  cursor:pointer;
+  accent-color:#6366f1;
+}
+.card-head-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
+.bulk-actions-bar{
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+  background:#1e293b;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:10px;
+  margin-bottom:14px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.15);
+}
+.bulk-actions-bar.show{
+  display:flex;
+}
+.bulk-actions-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:13px;
+  font-weight:600;
+}
+.bulk-actions-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.bulk-btn{
+  height:32px;
+  padding:0 12px;
+  border-radius:6px;
+  border:none;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:all 0.15s ease;
+}
+.bulk-btn.secondary{
+  background:#334155;
+  color:#f8fafc;
+}
+.bulk-btn.secondary:hover{
+  background:#475569;
+}
+.bulk-btn.success{
+  background:#16a34a;
+  color:#fff;
+}
+.bulk-btn.success:hover{
+  background:#15803d;
+}
+.bulk-btn.danger{
+  background:#dc2626;
+  color:#fff;
+}
+.bulk-btn.danger:hover{
+  background:#b91c1c;
+}
 
 @media(max-width:900px){
   .topbar{
@@ -523,9 +747,24 @@
       <option value="davi">Davi Silveira (Davi)</option>
       <option value="willian">Willian Gonçalves (Will)</option>
     </select>
-    <button class="btn small" type="button" onclick="openChangePasswordModal()" style="margin-left: 8px; font-size: 11px;">🔑 Alterar Senha</button>
-    <div id="dbStatusBadge" style="display:inline-flex; align-items:center; gap:4px; font-size:11px; margin-left:10px; padding:3px 8px; border-radius:12px; background:rgba(34,197,94,0.15); color:#22c55e; border:1px solid rgba(34,197,94,0.3); font-weight:600;" title="Status da Conexão Supabase">
-      <span style="width:7px; height:7px; border-radius:50%; background:#22c55e; display:inline-block;"></span> Supabase On
+    <div class="user-menu-container">
+      <button class="btn-user-menu" type="button" aria-label="Opções do usuário" onclick="toggleUserDropdown(event)" title="Mais opções">⋮</button>
+      <div id="userDropdownMenu" class="user-dropdown-menu">
+        <div class="user-dropdown-status">
+          <span style="color:#64748b; font-weight:500;">Status Banco</span>
+          <div id="dbStatusBadge" style="display:inline-flex; align-items:center; gap:4px; font-size:10px; padding:2px 7px; border-radius:12px; background:rgba(34,197,94,0.15); color:#22c55e; border:1px solid rgba(34,197,94,0.3); font-weight:600;" title="Status da Conexão Supabase">
+            <span style="width:6px; height:6px; border-radius:50%; background:#22c55e; display:inline-block;"></span> Supabase On
+          </div>
+        </div>
+        <div class="user-dropdown-divider"></div>
+        <button type="button" class="user-dropdown-item" onclick="closeUserDropdown(); openChangePasswordModal();">
+          <span>🔑</span> <span>Alterar Senha</span>
+        </button>
+        <div class="user-dropdown-divider"></div>
+        <button type="button" class="user-dropdown-item danger" onclick="closeUserDropdown(); logout();">
+          <span>🚪</span> <span>Sair</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -537,7 +776,28 @@
   <button class="advanced" onclick="clearFilters()">☷ &nbsp; Filtros avançados</button>
   <div class="top-actions"><button class="btn" onclick="clearFilters()">⟳ &nbsp; Limpar filtros</button><button class="btn primary" onclick="openTask()">＋ &nbsp; Nova tarefa</button></div>
 </section>
-<section class="board-wrap"><div id="board" class="board"></div></section>
+<section class="board-wrap">
+  <div id="bulkActionsBar" class="bulk-actions-bar">
+    <div class="bulk-actions-left">
+      <span id="selectedCountBadge" style="background:#475569; padding:2px 8px; border-radius:12px; font-size:12px;">0 selecionados</span>
+      <span>Ações em lote para os cards selecionados:</span>
+    </div>
+    <div class="bulk-actions-right">
+      <button type="button" class="bulk-btn success" onclick="bulkMarkAsCompleted()">✓ Concluir Selecionados</button>
+      <select id="bulkMoveSelect" class="form-select" style="height:32px; width:auto; padding:0 8px; font-size:12px;" onchange="bulkMoveToStatus(this.value); this.value='';">
+        <option value="">Mover para status...</option>
+        <option value="backlog">Backlog</option>
+        <option value="andamento">Em andamento</option>
+        <option value="testes">Em testes</option>
+        <option value="pausado">Pausado</option>
+        <option value="concluido">Concluído</option>
+      </select>
+      <button type="button" class="bulk-btn danger" onclick="bulkDeleteTasks()">🗑️ Excluir Selecionados</button>
+      <button type="button" class="bulk-btn secondary" onclick="clearSelectedCards()">Cancelar</button>
+    </div>
+  </div>
+  <div id="board" class="board"></div>
+</section>
 </main></div>
 
 <!-- Modal de Gerenciamento e Edição de Projetos -->
@@ -613,24 +873,71 @@
 </div>
 </div></div>
 
-<div class="modal-foot"><button class="btn" type="button" onclick="closeModal('memberModal')">Cancelar</button><button class="btn primary" onclick="saveMember()">Salvar membro</button></div>
+<!-- Modal Membro (Criar/Editar) -->
+<div id="memberModal" class="modal-backdrop" onclick="backdrop(event,'memberModal')"><div class="modal">
+<div class="modal-head"><h2 id="memberTitle">Adicionar membro</h2><button class="close" type="button" onclick="closeModal('memberModal')">×</button></div>
+<div class="modal-body">
+  <input type="hidden" id="memberId">
+  <div class="form-group"><label>Nome do Membro</label><input id="memberName" class="input" placeholder="Ex.: Maria Silva"></div>
+  <div class="form-group"><label>Função / Descrição</label><input id="memberRole" class="input" placeholder="Ex.: Responsável por O Leitor"></div>
+  <div class="form-group"><label>Projetos de Atuação (Atribuídos)</label><div id="memberProjects" class="member-list"></div></div>
+</div>
+<div class="modal-foot"><button class="btn" type="button" onclick="closeModal('memberModal')">Cancelar</button><button class="btn primary" type="button" onclick="saveMember()">Salvar membro</button></div>
+</div></div>
+
+<!-- Modal Editar Bucket / Coluna -->
+<div id="editBucketModal" class="modal-backdrop" onclick="backdrop(event,'editBucketModal')"><div class="modal" style="max-width:420px;">
+<div class="modal-head"><h2>Editar Coluna / Bucket</h2><button class="close" type="button" onclick="closeModal('editBucketModal')">×</button></div>
+<div class="modal-body">
+  <input type="hidden" id="editBucketId">
+  <div class="form-group"><label>Nome do Bucket</label><input id="editBucketName" class="input" placeholder="Ex.: Em andamento"></div>
+</div>
+<div class="modal-foot"><button class="btn" type="button" onclick="closeModal('editBucketModal')">Cancelar</button><button class="btn primary" type="button" onclick="saveBucketName()">Salvar Coluna</button></div>
 </div></div>
 
 <div id="changePasswordModal" class="modal-backdrop" onclick="backdrop(event,'changePasswordModal')"><div class="modal">
 <div class="modal-head"><h2>Alterar Senha</h2><button class="close" type="button" onclick="closeModal('changePasswordModal')">×</button></div>
 <div class="modal-body">
-  <div class="form-group"><label>Senha Antiga</label><input id="oldPasswordInput" type="password" class="input" placeholder="Digite sua senha antiga"></div>
-  <div class="form-group"><label>Nova Senha</label><input id="newPasswordInput" type="password" class="input" placeholder="Digite a nova senha"></div>
-  <div class="form-group"><label>Confirmar Nova Senha</label><input id="confirmPasswordInput" type="password" class="input" placeholder="Confirme a nova senha"></div>
+  <div class="form-group">
+    <label>Senha Antiga</label>
+    <div class="password-wrapper">
+      <input id="oldPasswordInput" type="password" class="input" placeholder="Digite sua senha antiga">
+      <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('oldPasswordInput', this)" title="Exibir/ocultar senha">👁️</button>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Nova Senha</label>
+    <div class="password-wrapper">
+      <input id="newPasswordInput" type="password" class="input" placeholder="Digite a nova senha">
+      <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('newPasswordInput', this)" title="Exibir/ocultar senha">👁️</button>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Confirmar Nova Senha</label>
+    <div class="password-wrapper">
+      <input id="confirmPasswordInput" type="password" class="input" placeholder="Confirme a nova senha">
+      <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('confirmPasswordInput', this)" title="Exibir/ocultar senha">👁️</button>
+    </div>
+  </div>
 </div>
 <div class="modal-foot"><button class="btn" type="button" onclick="closeModal('changePasswordModal')">Cancelar</button><button class="btn primary" onclick="submitChangePassword()">Salvar Nova Senha</button></div>
 </div></div>
 
-<div id="loginModal" class="modal-backdrop"><div class="modal" style="max-width:380px;">
+<div id="loginModal" class="modal-backdrop" onclick="if(isAuthenticated) backdrop(event,'loginModal')"><div class="modal" style="max-width:380px;">
 <div class="modal-head"><h2 id="loginModalTitle">Autenticação de Perfil</h2></div>
 <div class="modal-body">
   <p id="loginModalSub" style="font-size:13px; color:var(--text-dim); margin-bottom:12px;"></p>
-  <div class="form-group"><label>Senha de Acesso</label><input id="loginPasswordInput" type="password" class="input" placeholder="Digite a senha do perfil" onkeydown="if(event.key==='Enter')submitProfileLogin()"></div>
+  <div class="form-group">
+    <label>Senha de Acesso</label>
+    <div class="password-wrapper">
+      <input id="loginPasswordInput" type="password" class="input" placeholder="Digite a senha do perfil" onkeydown="if(event.key==='Enter')submitProfileLogin()">
+      <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('loginPasswordInput', this)" title="Exibir/ocultar senha">👁️</button>
+    </div>
+  </div>
+  <label class="remember-me-wrap">
+    <input type="checkbox" id="rememberMeInput">
+    <span>Lembrar de mim neste dispositivo</span>
+  </label>
 </div>
 <div class="modal-foot">
   <button class="btn" type="button" onclick="cancelProfileLogin()">Cancelar</button>
@@ -658,8 +965,22 @@ let tasks=[
 {id:"3",project:"leitor",title:"Correção de bugs",desc:"Corrigir bugs identificados durante os testes.",status:"testes",start:"2026-06-26",end:"2026-07-02",members:["a1111111-1111-1111-1111-111111111111"]},
 {id:"4",project:"lobby",title:"Refinamento",desc:"Refinamento geral da aplicação e experiência do usuário.",status:"andamento",start:"2026-05-20",end:"2026-06-10",members:["a1111111-1111-1111-1111-111111111111","c3333333-3333-3333-3333-333333333333","b2222222-2222-2222-2222-222222222222"]},
 {id:"5",project:"lime",title:"Desenvolvimento",desc:"Desenvolvimento das funcionalidades principais do projeto.",status:"andamento",start:"2026-05-25",end:"2026-06-15",members:["b2222222-2222-2222-2222-222222222222","a1111111-1111-1111-1111-111111111111"]}];
+let currentProfile = "carlos";
+let pendingProfileId = "carlos";
+let currentMemberId = "a1111111-1111-1111-1111-111111111111";
+let isAuthenticated = false;
+
+const profiles = {
+  carlos: { name: "Carlos Santana", user: "carlos", initials: "CS" },
+  davi: { name: "Davi", user: "davi", initials: "DV" },
+  willian: { name: "Willian", user: "willian", initials: "WI" }
+};
 let selectedProject="harvast",dragged=null;
 let P={}, S={};
+
+function esc(s){if(s===null||s===undefined)return "";return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
+function initials(name){if(!name)return "??";return name.split(" ").filter(Boolean).map(n=>n[0]).slice(0,2).join("").toUpperCase();}
+function dates(s,e){if(!s&&!e)return"Sem data";if(s&&!e)return s;if(!s&&e)return e;return`${s} - ${e}`;}
 
 function getActiveMember() {
   let activeProfileKey = (document.getElementById("profileSelect")?.value || "carlos").toLowerCase();
@@ -682,18 +1003,46 @@ async function init(){
     if(el) el.src=LOGO;
   });
 
-  // Carrega projetos e membros do Supabase
-  await loadBaseData();
-  await loadTasks();
+  // Exige autenticação por senha antes de carregar e exibir qualquer informação
+  requestInitialAuth();
+}
 
-  // Inscreve no Supabase Realtime para sincronização em tempo real
-  if (window.PlannerDataService && window.PlannerDataService.RealtimeService) {
-    window.PlannerDataService.RealtimeService.subscribeToChanges(async (payload) => {
-      console.log("Realtime sync trigger:", payload);
-      await loadTasks();
-      await loadBaseData();
-    });
+function requestInitialAuth() {
+  const savedSession = localStorage.getItem("planner_remembered_session");
+  if (savedSession) {
+    try {
+      const data = JSON.parse(savedSession);
+      if (data && data.profileId && profiles[data.profileId]) {
+        currentProfile = data.profileId;
+        currentMemberId = data.memberId;
+        isAuthenticated = true;
+
+        const profileSelect = document.getElementById("profileSelect");
+        if (profileSelect) profileSelect.value = currentProfile;
+
+        const avatar = document.getElementById("profileAvatar");
+        if (avatar && profiles[currentProfile]) avatar.textContent = profiles[currentProfile].initials;
+
+        loadBaseData();
+        loadTasks();
+        return;
+      }
+    } catch(e) {
+      console.error("Erro ao carregar sessão salva:", e);
+    }
   }
+
+  const profileSelect = document.getElementById("profileSelect");
+  if (profileSelect) profileSelect.value = currentProfile;
+  
+  pendingProfileId = currentProfile;
+  const profile = profiles[currentProfile];
+  
+  document.getElementById("loginModalTitle").textContent = "Autenticação Obrigatória";
+  document.getElementById("loginModalSub").textContent = `Bem-vindo ao Planner. Digite a senha para acessar como ${profile.name}:`;
+  document.getElementById("loginPasswordInput").value = "";
+  show("loginModal");
+  setTimeout(() => document.getElementById("loginPasswordInput").focus(), 150);
 }
 
 async function loadBaseData() {
@@ -747,7 +1096,7 @@ async function loadTasks() {
   if (window.PlannerDataService) {
     try {
       let fetchedTasks = await window.PlannerDataService.TasksService.fetchTasks();
-      if (fetchedTasks) {
+      if (fetchedTasks && fetchedTasks.length > 0) {
         tasks = fetchedTasks;
       }
     } catch (e) {
@@ -755,6 +1104,7 @@ async function loadTasks() {
     }
   }
   render();
+  renderTeam();
 }
 
 function fill(){
@@ -769,19 +1119,61 @@ function fill(){
 
 function selectProject(id){selectedProject=id;fill();render()}
 
+let selectedTaskIds = new Set();
+
 function render(){
   let q=document.getElementById("search").value.toLowerCase(),sf=document.getElementById("statusFilter").value,mf=document.getElementById("memberFilter").value;
-  let list=tasks.filter(t=>t.project==selectedProject&&( !q||(t.title+" "+(t.desc||"")).toLowerCase().includes(q))&&(!sf||t.status==sf)&&(!mf||t.members?.includes(mf)));
+  let targetProj = PROJECTS.find(p => p.id === selectedProject || p.slug === selectedProject);
+
+  let list=tasks.filter(t=> {
+    let matchesProject = (t.project == selectedProject) || 
+                         (targetProj && (t.project == targetProj.id || t.project == targetProj.slug || t.project_id == targetProj.id || t.project_id == targetProj.slug));
+    let matchesQuery = !q || (t.title + " " + (t.desc || t.description || "")).toLowerCase().includes(q);
+    let matchesStatus = !sf || t.status == sf;
+    let matchesMember = !mf || t.members?.includes(mf);
+    return matchesProject && matchesQuery && matchesStatus && matchesMember;
+  });
+
   document.getElementById("board").innerHTML=STATUSES.map(s=>{
    let a=list.filter(t=>t.status==s.id);
-   return `<section class="column"><div class="column-head"><div class="column-title"><span class="dot ${s.dot}"></span>${s.name}<span class="count">${a.length}</span></div><div class="column-actions"><button class="small-icon" onclick="openTask(null,'${s.id}')">＋</button><button class="small-icon">⋮</button></div></div><div class="cards" ondragover="event.preventDefault()" ondrop="drop(event,'${s.id}')">${a.length?a.map(card).join(""):`<div class="empty"><div class="empty-icon">${s.id=="concluido"?"✓":"+"}</div><b>${s.id=="concluido"?"Nenhuma tarefa concluída":"Nenhuma tarefa aqui"}</b><span>${s.id=="concluido"?"Ótimo trabalho! 🎉":"Adicione uma nova tarefa para começar."}</span></div>`}</div><button class="add-task" onclick="openTask(null,'${s.id}')">＋ &nbsp;Adicionar tarefa</button></section>`;
+   return `<section class="column">
+     <div class="column-head">
+       <div class="column-title"><span class="dot ${s.dot}"></span>${esc(s.name)}<span class="count">${a.length}</span></div>
+       <div class="column-actions" style="position:relative;">
+         <button class="small-icon" title="Adicionar tarefa" onclick="openTask(null,'${s.id}')">＋</button>
+         <button class="small-icon" title="Opções da coluna" onclick="toggleBucketDropdown(event, '${s.id}')">⋮</button>
+         <div id="bucketMenu_${s.id}" class="bucket-dropdown-menu">
+           <button type="button" class="user-dropdown-item" onclick="closeAllBucketDropdowns(); openEditBucketModal('${s.id}')">
+             <span>✏️</span> <span>Editar Coluna</span>
+           </button>
+         </div>
+       </div>
+     </div>
+     <div class="cards" ondragover="event.preventDefault()" ondrop="drop(event,'${s.id}')">
+       ${a.length?a.map(card).join(""):`<div class="empty"><div class="empty-icon">${s.id=="concluido"?"✓":"+"}</div><b>${s.id=="concluido"?"Nenhuma tarefa concluída":"Nenhuma tarefa aqui"}</b><span>${s.id=="concluido"?"Ótimo trabalho! 🎉":"Adicione uma nova tarefa para começar."}</span></div>`}
+     </div>
+     <button class="add-task" onclick="openTask(null,'${s.id}')">＋ &nbsp;Adicionar tarefa</button>
+   </section>`;
   }).join("");
+
+  updateBulkActionsBarUI();
 }
 
-
 function card(t){
+  let isChecked = selectedTaskIds.has(String(t.id));
   let av=(t.members||[]).map((id,i)=>{let m=members.find(x=>x.id==id);return m?`<div class="mini-avatar" title="${esc(m.name)}">${initials(m.name)}</div>`:""}).join("");
-  return `<article class="card" draggable="true" ondragstart="dragged='${t.id}'" ondblclick="openTask('${t.id}')"><div class="card-title">${esc(t.title)}</div><div class="card-desc">${esc(t.desc||"Sem descrição.")}</div><div class="card-bottom"><div class="date">▣ ${dates(t.start,t.end)}</div><span class="pill ${S[t.status]?.dot||'backlog'}">${S[t.status]?.name||'Backlog'}</span></div><div class="assignees">${av}<button class="add-mini" onclick="openTask('${t.id}')">+</button></div></article>`
+  return `<article class="card ${isChecked ? 'selected' : ''}" draggable="true" ondragstart="dragged='${t.id}'" ondblclick="openTask('${t.id}')">
+    <div class="card-head-row">
+      <input type="checkbox" class="card-checkbox" title="Selecionar card" ${isChecked ? 'checked' : ''} onchange="toggleCardSelection('${t.id}', this.checked, event)">
+      <span class="pill ${S[t.status]?.dot||'backlog'}">${S[t.status]?.name||'Backlog'}</span>
+    </div>
+    <div class="card-title">${esc(t.title)}</div>
+    <div class="card-desc">${esc(t.desc||t.description||"Sem descrição.")}</div>
+    <div class="card-bottom">
+      <div class="date">▣ ${dates(t.start,t.end)}</div>
+    </div>
+    <div class="assignees">${av}<button class="add-mini" onclick="openTask('${t.id}')">+</button></div>
+  </article>`
 }
 
 async function drop(e,status){
@@ -806,47 +1198,59 @@ function openTask(id=null,status="andamento"){
   let t=id&&tasks.find(x=>x.id==id);document.getElementById("taskId").value=id||"";document.getElementById("taskModalTitle").textContent=t?"Editar tarefa":"Nova tarefa";
   ["taskTitle","taskDesc","taskStart","taskEnd"].forEach(k=>document.getElementById(k).value=t?t[{taskTitle:"title",taskDesc:"desc",taskStart:"start",taskEnd:"end"}[k]]||"":"");
   document.getElementById("taskProject").value=t?.project||selectedProject;document.getElementById("taskStatus").value=t?.status||status;
-  document.getElementById("taskMembers").innerHTML=members.map(m=>`<label class="member-row"><input type="checkbox" value="${m.id}" ${t?.members?.includes(m.id)?"checked":""}><div class="avatar" style="width:29px;height:29px;font-size:9px">${initials(m.name)}</div><div class="member-info"><div class="member-name">${esc(m.name)}</div><div class="member-role">${esc(m.role)}</div></div></label>`).join("");
+  document.getElementById("taskMembers").innerHTML=members.map(m=>`<label class="member-row"><input type="checkbox" value="${m.id}" ${t?.members?.includes(m.id)?"checked":""}><div class="avatar" style="width:29px;height:29px;font-size:9px">${initials(m.name)}</div><div class="member-info"><div class="member-name">${esc(m.name)}</div></div></label>`).join("");
   show("taskModal");
 }
 
 async function saveTask(){
   let title=document.getElementById("taskTitle").value.trim();
   if(!title)return toast("Informe um título.");
+
+  let desc = document.getElementById("taskDesc").value.trim();
+  if(!desc || desc.length < 15) {
+    return toast("A descrição deve ter no mínimo 15 caracteres.");
+  }
+
+  let selectedMembers = [...document.querySelectorAll("#taskMembers input:checked")].map(x=>x.value);
+  if(!selectedMembers || selectedMembers.length === 0) {
+    return toast("É obrigatório atribuir a tarefa a pelo menos um responsável.");
+  }
+
   let id=document.getElementById("taskId").value;
   let d={
     id: id || null,
     title,
-    desc: document.getElementById("taskDesc").value.trim(),
+    description: desc,
+    desc: desc,
     project: document.getElementById("taskProject").value,
     status: document.getElementById("taskStatus").value,
+    start_date: document.getElementById("taskStart").value || null,
     start: document.getElementById("taskStart").value,
+    end_date: document.getElementById("taskEnd").value || null,
     end: document.getElementById("taskEnd").value,
-    members: [...document.querySelectorAll("#taskMembers input:checked")].map(x=>x.value)
+    members: selectedMembers
   };
 
   if (window.PlannerDataService) {
     try {
-      let saved = await window.PlannerDataService.TasksService.saveTask(d);
+      let saved = await window.PlannerDataService.TasksService.saveTask(d, currentMemberId);
       if (saved) {
         await loadTasks();
-        close("taskModal");
+        closeModal("taskModal");
         toast(id ? "Tarefa atualizada no Supabase." : "Tarefa criada no Supabase.");
         return;
       }
     } catch(err) {
       console.error("Erro ao salvar no Supabase:", err);
-      toast("Erro ao salvar tarefa.");
-      return;
     }
   }
 
-  // Fallback local se o service não estiver disponível
+  // Fallback local se o Supabase falhar ou não estiver configurado
   if(id) Object.assign(tasks.find(x=>x.id==id),d);
   else tasks.push({id:"t"+Date.now(),...d});
-  close("taskModal");
+  closeModal("taskModal");
   render();
-  toast(id?"Tarefa atualizada.":"Tarefa criada.");
+  toast(id ? "Tarefa atualizada." : "Tarefa criada.");
 }
 
 function openTeam(){
@@ -888,12 +1292,10 @@ function renderTeam(){
     return `<div class="team-member-row">
       <div class="team-avatar">${initials(m.name)}</div>
       <div class="team-member-main">
-        <div class="team-member-name">${esc(m.name)} ${m.username ? `<small style="color:var(--text-dim); font-size:12px;">(@${esc(m.username)})</small>` : ""}</div>
-        <div class="team-member-role">${esc(m.role||"Sem função definida.")}</div>
+        <div class="team-member-name">${esc(m.name)}</div>
         <div class="team-member-meta">
           <span class="team-chip">${memberTasks} ${memberTasks==1?"tarefa":"tarefas"}</span>
           <span class="team-chip">${projects} ${projects==1?"projeto":"projetos"}</span>
-          <span class="team-chip" style="background: rgba(255,255,255,0.05);">${m.role_level === 'master' ? '👑 Master' : m.role_level === 'moderator' ? '🛡️ Moderador' : '👤 Membro'}</span>
         </div>
       </div>
       <div class="team-member-actions">
@@ -932,6 +1334,8 @@ async function submitChangePassword(){
       let res = await window.PlannerDataService.MembersService.changePassword(activeMem.id, oldPass, newPass);
       if (res.success) {
         activeMem.password = newPass;
+        let mObj = members.find(x => x.id === activeMem.id);
+        if (mObj) mObj.password = newPass;
         closeModal("changePasswordModal");
         toast(res.message);
       } else {
@@ -949,6 +1353,8 @@ async function submitChangePassword(){
   }
 
   activeMem.password = newPass;
+  let mObj = members.find(x => x.id === activeMem.id);
+  if (mObj) mObj.password = newPass;
   closeModal("changePasswordModal");
   toast("Senha alterada com sucesso!");
 }
@@ -958,6 +1364,20 @@ function openMember(id=""){
   document.getElementById("memberId").value=id;
   document.getElementById("memberName").value=m?.name||"";
   document.getElementById("memberRole").value=m?.role||"";
+
+  // Renderiza a lista de projetos permitindo vincular/desvincular o membro
+  let projectsEl = document.getElementById("memberProjects");
+  if (projectsEl) {
+    projectsEl.innerHTML = PROJECTS.map(p => {
+      let isChecked = p.members && p.members.includes(id);
+      return `<label class="member-item">
+        <input type="checkbox" value="${p.id}" ${isChecked ? 'checked' : ''}>
+        <div class="mini-avatar" style="background:${p.color || '#3b82f6'}">${p.icon || '📁'}</div>
+        <div><b>${esc(p.name)}</b></div>
+      </label>`;
+    }).join("");
+  }
+
   show("memberModal");
   setTimeout(()=>document.getElementById("memberName").focus(),0);
 }
@@ -965,8 +1385,9 @@ function editMember(id){openMember(id)}
 async function saveMember(){
   let name=document.getElementById("memberName").value.trim();
   if(!name)return toast("Informe o nome.");
-  let id=document.getElementById("memberId").value;
+  let id=document.getElementById("memberId").value || "m" + Date.now();
   let role=document.getElementById("memberRole").value.trim();
+  let selectedProjectIds = [...document.querySelectorAll("#memberProjects input:checked")].map(x => x.value);
 
   let targetMember = id && members.find(x=>x.id==id);
   if (targetMember) {
@@ -976,29 +1397,40 @@ async function saveMember(){
     }
   }
 
+  // Atualiza as associações dos projetos no array local de PROJECTS
+  PROJECTS.forEach(p => {
+    if (!p.members) p.members = [];
+    if (selectedProjectIds.includes(p.id)) {
+      if (!p.members.includes(id)) p.members.push(id);
+    } else {
+      p.members = p.members.filter(mId => mId !== id);
+    }
+  });
+
   if (window.PlannerDataService) {
     try {
-      await window.PlannerDataService.MembersService.saveMember({id: id || null, name, role});
+      await window.PlannerDataService.MembersService.saveMember({id: id, name, role});
       await loadBaseData();
       closeModal("memberModal");
-      toast(id ? "Membro atualizado no Supabase." : "Membro adicionado no Supabase.");
+      toast("Membro e projetos salvos no Supabase.");
       return;
     } catch (e) {
       console.error("Erro ao salvar membro no Supabase:", e);
     }
   }
 
-  if(id){
-    let m=members.find(x=>x.id==id);
-    if(m){m.name=name;m.role=role;}
+  let m = members.find(x=>x.id==id);
+  if(m){
+    m.name=name;
+    m.role=role;
   }else{
-    members.push({id:"m"+Date.now(),name,role});
+    members.push({id, name, role});
   }
   closeModal("memberModal");
   fill();
   renderTeam();
   render();
-  toast("Equipe atualizada.");
+  toast("Membro e projetos atualizados.");
 }
 
 async function deleteMember(id){
@@ -1034,9 +1466,6 @@ async function deleteMember(id){
 
 function clearFilters(){document.getElementById("search").value="";document.getElementById("statusFilter").value="";document.getElementById("memberFilter").value="";render()}
 
-let currentMemberId = "a1111111-1111-1111-1111-111111111111"; // Default Carlos
-let pendingProfileId = null;
-
 function changeProfile(id){
   const profile=profiles[id];
   if(!profile)return;
@@ -1045,22 +1474,194 @@ function changeProfile(id){
   if (id === currentProfile) return;
 
   pendingProfileId = id;
-  document.getElementById("loginModalSub").textContent = `Informe a senha de ${profile.name} (@${profile.user}):`;
+  document.getElementById("loginModalSub").textContent = `Informe a senha de ${profile.name}:`;
   document.getElementById("loginPasswordInput").value = "";
   show("loginModal");
   setTimeout(() => document.getElementById("loginPasswordInput").focus(), 100);
 }
 
 function cancelProfileLogin(){
-  // Reverte a seleção do dropdown para o perfil atual
+  if (!isAuthenticated) {
+    toast("Autenticação necessária para acessar o sistema.");
+    return;
+  }
   document.getElementById("profileSelect").value = currentProfile;
   closeModal("loginModal");
   pendingProfileId = null;
 }
 
-function submitProfileLogin(){
+function toggleUserDropdown(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById("userDropdownMenu");
+  const btn = e ? e.currentTarget : null;
+  if (!menu) return;
+  menu.classList.toggle("show");
+  if (btn) btn.classList.toggle("active", menu.classList.contains("show"));
+}
+
+function toggleBucketDropdown(e, bucketId) {
+  if (e) e.stopPropagation();
+  closeAllBucketDropdowns();
+  const menu = document.getElementById("bucketMenu_" + bucketId);
+  if (menu) menu.classList.toggle("show");
+}
+
+function closeAllBucketDropdowns() {
+  document.querySelectorAll(".bucket-dropdown-menu.show").forEach(m => m.classList.remove("show"));
+}
+
+function openEditBucketModal(bucketId) {
+  let st = STATUSES.find(s => s.id === bucketId);
+  if (!st) return;
+  document.getElementById("editBucketId").value = bucketId;
+  document.getElementById("editBucketName").value = st.name;
+  show("editBucketModal");
+  setTimeout(() => document.getElementById("editBucketName").focus(), 100);
+}
+
+function saveBucketName() {
+  let bucketId = document.getElementById("editBucketId").value;
+  let newName = document.getElementById("editBucketName").value.trim();
+  if (!newName) return toast("Informe o nome do bucket/coluna.");
+  let st = STATUSES.find(s => s.id === bucketId);
+  if (st) {
+    st.name = newName;
+    S[st.id] = st;
+  }
+  closeModal("editBucketModal");
+  fill();
+  render();
+  toast("Nome da coluna atualizado!");
+}
+
+function toggleCardSelection(id, checked, e) {
+  if (e) e.stopPropagation();
+  let idStr = String(id);
+  if (checked) {
+    selectedTaskIds.add(idStr);
+  } else {
+    selectedTaskIds.delete(idStr);
+  }
+  updateBulkActionsBarUI();
+}
+
+function clearSelectedCards() {
+  selectedTaskIds.clear();
+  render();
+}
+
+function updateBulkActionsBarUI() {
+  const bar = document.getElementById("bulkActionsBar");
+  const badge = document.getElementById("selectedCountBadge");
+  if (!bar) return;
+  let count = selectedTaskIds.size;
+  if (count > 0) {
+    bar.classList.add("show");
+    if (badge) badge.textContent = `${count} selecionado${count > 1 ? 's' : ''}`;
+  } else {
+    bar.classList.remove("show");
+  }
+}
+
+async function bulkMarkAsCompleted() {
+  if (selectedTaskIds.size === 0) return;
+  let ids = Array.from(selectedTaskIds);
+  tasks.forEach(t => {
+    if (ids.includes(String(t.id))) t.status = "concluido";
+  });
+
+  if (window.PlannerDataService) {
+    try {
+      for (let id of ids) {
+        await window.PlannerDataService.TasksService.updateTaskStatus(id, "concluido");
+      }
+    } catch(err) {
+      console.error("Erro em lote Supabase:", err);
+    }
+  }
+
+  toast(`${ids.length} tarefa(s) marcada(s) como concluída(s)!`);
+  clearSelectedCards();
+}
+
+async function bulkMoveToStatus(newStatus) {
+  if (!newStatus || selectedTaskIds.size === 0) return;
+  let ids = Array.from(selectedTaskIds);
+  tasks.forEach(t => {
+    if (ids.includes(String(t.id))) t.status = newStatus;
+  });
+
+  if (window.PlannerDataService) {
+    try {
+      for (let id of ids) {
+        await window.PlannerDataService.TasksService.updateTaskStatus(id, newStatus);
+      }
+    } catch(err) {
+      console.error("Erro em lote Supabase:", err);
+    }
+  }
+
+  let statusObj = STATUSES.find(s => s.id === newStatus);
+  toast(`${ids.length} tarefa(s) movida(s) para "${statusObj ? statusObj.name : newStatus}"!`);
+  clearSelectedCards();
+}
+
+async function bulkDeleteTasks() {
+  if (selectedTaskIds.size === 0) return;
+  let ids = Array.from(selectedTaskIds);
+  if (!confirm(`Tem certeza que deseja excluir ${ids.length} tarefa(s) selecionada(s)?`)) return;
+
+  tasks = tasks.filter(t => !ids.includes(String(t.id)));
+
+  if (window.PlannerDataService) {
+    try {
+      for (let id of ids) {
+        await window.PlannerDataService.TasksService.deleteTask(id);
+      }
+    } catch(err) {
+      console.error("Erro ao excluir tarefas no Supabase:", err);
+    }
+  }
+
+  toast(`${ids.length} tarefa(s) excluída(s)!`);
+  clearSelectedCards();
+}
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".user-menu-container")) {
+    closeUserDropdown();
+  }
+  if (!e.target.closest(".column-actions")) {
+    closeAllBucketDropdowns();
+  }
+});
+
+function togglePasswordVisibility(inputId, btnEl) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  if (input.type === "password") {
+    input.type = "text";
+    if (btnEl) btnEl.textContent = "🙈";
+  } else {
+    input.type = "password";
+    if (btnEl) btnEl.textContent = "👁️";
+  }
+}
+
+function logout() {
+  localStorage.removeItem("planner_remembered_session");
+  isAuthenticated = false;
+  currentProfile = "carlos";
+  pendingProfileId = "carlos";
+  currentMemberId = "a1111111-1111-1111-1111-111111111111";
+  toast("Sessão encerrada com sucesso.");
+  requestInitialAuth();
+}
+
+async function submitProfileLogin(){
   if (!pendingProfileId) return closeModal("loginModal");
   let inputPass = document.getElementById("loginPasswordInput").value.trim();
+  let rememberMe = document.getElementById("rememberMeInput")?.checked;
 
   // Encontra as credenciais do perfil solicitado em members
   let targetMember = members.find(m => {
@@ -1068,9 +1669,9 @@ function submitProfileLogin(){
     return (m.username && m.username.toLowerCase() === pKey) || m.id.toLowerCase().includes(pKey) || (m.name && m.name.toLowerCase().includes(pKey));
   });
 
-  let validPass = targetMember?.password || (pendingProfileId === "carlos" ? "S&nha@master" : "S&nha@123");
+  let validPass = targetMember ? targetMember.password : null;
 
-  if (inputPass !== validPass) {
+  if (!validPass || inputPass !== validPass) {
     toast("Senha incorreta! Acesso negado.");
     document.getElementById("loginPasswordInput").value = "";
     document.getElementById("loginPasswordInput").focus();
@@ -1081,10 +1682,20 @@ function submitProfileLogin(){
   const id = pendingProfileId;
   const profile = profiles[id];
   currentProfile = id;
+  isAuthenticated = true;
 
   if (id === "carlos") currentMemberId = "a1111111-1111-1111-1111-111111111111";
   else if (id === "davi") currentMemberId = "b2222222-2222-2222-2222-222222222222";
   else if (id === "willian") currentMemberId = "c3333333-3333-3333-3333-333333333333";
+
+  if (rememberMe) {
+    localStorage.setItem("planner_remembered_session", JSON.stringify({
+      profileId: id,
+      memberId: currentMemberId
+    }));
+  } else {
+    localStorage.removeItem("planner_remembered_session");
+  }
 
   const avatar = document.getElementById("profileAvatar");
   if(avatar) avatar.textContent = profile.initials;
@@ -1092,13 +1703,34 @@ function submitProfileLogin(){
   closeModal("loginModal");
   toast(`Autenticado com sucesso! Perfil ativo: ${profile.name}`);
 
-  // Recarregar projetos e filtro visual
-  loadBaseData();
-  loadTasks();
+  // Carregar dados e inscrever no Supabase Realtime
+  await loadBaseData();
+  await loadTasks();
+
+  if (window.PlannerDataService && window.PlannerDataService.RealtimeService && !window.hasSubscribedRealtime) {
+    window.hasSubscribedRealtime = true;
+    window.PlannerDataService.RealtimeService.subscribeToChanges(async (payload) => {
+      console.log("Realtime sync trigger:", payload);
+      await loadTasks();
+      await loadBaseData();
+    });
+  }
 }
 
-// Filtra projetos por visibilidade (Owner ou Membro Atribuído)
+function openProjectModal(){
+  renderProjectManageList();
+  show("projectManageModal");
+}
+
+function openTeamModal(){
+  openTeam();
+}
+
 function getVisibleProjects() {
+  if (isMasterAdmin()) {
+    return PROJECTS;
+  }
+
   let activeMem = getActiveMember();
   let memberKeys = [
     currentMemberId.toLowerCase(),
@@ -1119,11 +1751,6 @@ function getVisibleProjects() {
 
     return isOwner || isMember;
   });
-}
-
-function openProjectModal(){
-  renderProjectManageList();
-  show("projectManageModal");
 }
 
 function renderProjectManageList(){
@@ -1164,7 +1791,7 @@ function openEditProjectForm(id = null) {
 
   // Preenche donos disponíveis
   let ownerSelect = document.getElementById("projectFormOwner");
-  ownerSelect.innerHTML = members.map(m => `<option value="${m.id}" ${(p?.owner_id || currentMemberId) === m.id ? "selected" : ""}>${esc(m.name)} (${esc(m.role)})</option>`).join("");
+  ownerSelect.innerHTML = members.map(m => `<option value="${m.id}" ${(p?.owner_id || currentMemberId) === m.id ? "selected" : ""}>${esc(m.name)}</option>`).join("");
 
   // Apenas o owner pode alterar o dono do projeto
   let isOwner = !p || p.owner_id === currentMemberId;
@@ -1174,7 +1801,7 @@ function openEditProjectForm(id = null) {
   let membersContainer = document.getElementById("projectFormMembers");
   membersContainer.innerHTML = members.map(m => {
     let checked = p?.members?.includes(m.id) || m.id === currentMemberId;
-    return `<label class="member-row"><input type="checkbox" value="${m.id}" ${checked ? "checked" : ""}><div class="avatar" style="width:29px;height:29px;font-size:9px">${initials(m.name)}</div><div class="member-info"><div class="member-name">${esc(m.name)}</div><div class="member-role">${esc(m.role)}</div></div></label>`;
+    return `<label class="member-row"><input type="checkbox" value="${m.id}" ${checked ? "checked" : ""}><div class="avatar" style="width:29px;height:29px;font-size:9px">${initials(m.name)}</div><div class="member-info"><div class="member-name">${esc(m.name)}</div></div></label>`;
   }).join("");
 
   show("projectFormModal");

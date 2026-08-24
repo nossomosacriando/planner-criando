@@ -79,6 +79,7 @@ export const ProjectsService = {
 
     return data.map(p => ({
       ...p,
+      id: p.slug || String(p.id),
       members: p.project_members ? p.project_members.map(pm => pm.member_id) : []
     }));
   },
@@ -276,6 +277,9 @@ export const TasksService = {
     return data.map(t => ({
       ...t,
       project: t.project_id,
+      desc: t.description || "",
+      start: t.start_date || "",
+      end: t.end_date || "",
       members: t.task_members ? t.task_members.map(tm => tm.member_id) : []
     }));
   },
