@@ -524,6 +524,9 @@
       <option value="willian">Willian Gonçalves (Will)</option>
     </select>
     <button class="btn small" type="button" onclick="openChangePasswordModal()" style="margin-left: 8px; font-size: 11px;">🔑 Alterar Senha</button>
+    <div id="dbStatusBadge" style="display:inline-flex; align-items:center; gap:4px; font-size:11px; margin-left:10px; padding:3px 8px; border-radius:12px; background:rgba(34,197,94,0.15); color:#22c55e; border:1px solid rgba(34,197,94,0.3); font-weight:600;" title="Status da Conexão Supabase">
+      <span style="width:7px; height:7px; border-radius:50%; background:#22c55e; display:inline-block;"></span> Supabase On
+    </div>
   </div>
 </div>
 </header>
@@ -704,8 +707,22 @@ async function loadBaseData() {
       if (fetchedMembers && fetchedMembers.length > 0) {
         members = fetchedMembers;
       }
+      let badge = document.getElementById("dbStatusBadge");
+      if (badge) {
+        badge.innerHTML = `<span style="width:7px; height:7px; border-radius:50%; background:#22c55e; display:inline-block;"></span> Supabase Conectado`;
+        badge.style.background = "rgba(34,197,94,0.15)";
+        badge.style.color = "#22c55e";
+        badge.style.borderColor = "rgba(34,197,94,0.3)";
+      }
     } catch (e) {
       console.error("Erro ao carregar dados base do Supabase, usando dados locais:", e);
+      let badge = document.getElementById("dbStatusBadge");
+      if (badge) {
+        badge.innerHTML = `<span style="width:7px; height:7px; border-radius:50%; background:#f59e0b; display:inline-block;"></span> Modo Local`;
+        badge.style.background = "rgba(245,158,11,0.15)";
+        badge.style.color = "#f59e0b";
+        badge.style.borderColor = "rgba(245,158,11,0.3)";
+      }
     }
   }
   
