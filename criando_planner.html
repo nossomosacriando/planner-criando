@@ -13,6 +13,388 @@
 .board-wrap{flex:1;min-height:0;overflow:auto;padding:21px 24px 25px}.board{display:grid;grid-template-columns:repeat(5,minmax(210px,1fr));gap:11px;min-width:1040px;height:100%}.column{background:#f1f2f6;border:1px solid #e4e5eb;border-radius:11px;display:flex;flex-direction:column;min-height:520px;overflow:hidden}.column-head{height:53px;padding:0 11px 0 14px;display:flex;align-items:center;justify-content:space-between}.column-title{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700}.dot{width:12px;height:12px;border-radius:50%}.backlog{background:#9ca2af}.andamento{background:#3f73df}.testes{background:#f1bc18}.pausado{background:#d9343d}.concluido{background:#65bf67}.count{min-width:23px;height:23px;border-radius:20px;background:#e4e5eb;display:grid;place-items:center;font-size:11px;color:#656a77}.column-actions{display:flex;gap:4px}.small-icon{width:31px;height:31px;border:0;border-radius:7px;background:transparent;color:#626775;font-size:19px}.small-icon:hover{background:#fff;color:#5d4bd3}.cards{padding:0 8px 9px;overflow:auto;flex:1}.cards.drag-over{background:#ebe9ff}.card{background:#fff;border:1px solid #e1e3e9;border-radius:9px;padding:13px;margin-bottom:8px;box-shadow:0 2px 7px #20243a0b;cursor:grab;transition:.16s}.card:hover{transform:translateY(-2px);box-shadow:0 9px 18px #20243a12}.card.dragging{opacity:.45}.card-title{font-size:13px;font-weight:700;line-height:1.35;margin-bottom:9px}.card-desc{font-size:11px;line-height:1.5;color:#737786;min-height:34px}.card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:5px}.date{font-size:10px;color:#535762}.pill{font-size:10px;font-weight:600;border-radius:6px;padding:6px 8px;white-space:nowrap}.pill.backlog{background:#eef0f4;color:#565b68}.pill.andamento{background:#eeebff;color:#5c4bd6}.pill.testes{background:#fff5dc;color:#a77705}.pill.pausado{background:#fde7e9;color:#c33d46}.pill.concluido{background:#e8f7eb;color:#258448}.assignees{display:flex;margin-top:10px}.mini-avatar{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:8px;font-weight:700;border:2px solid #fff;margin-right:-6px;background:#6731a7}.mini-avatar.blue{background:#2469d8}.mini-avatar.green{background:#25834f}.add-mini{width:25px;height:25px;border-radius:50%;border:1px solid #dddfe6;background:#fff;color:#767987;font-size:15px;display:grid;place-items:center;margin-left:9px}.add-task{height:45px;margin:0 7px 7px;border:0;background:transparent;color:#5c4bd6;text-align:left;padding:0 12px;font-size:12px}.add-task:hover{background:#e8e6fb;border-radius:7px}.empty{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#737785;text-align:center;padding:30px}.empty-icon{width:58px;height:58px;border:1px solid #b7d8cf;border-radius:50%;display:grid;place-items:center;color:#4cb083;font-size:27px;margin-bottom:28px;background:#f0faf5}.empty b{font-size:13px}.empty span{font-size:11px;margin-top:7px;color:#858997}
 .modal-backdrop{position:fixed;inset:0;background:#0b0e18a6;backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:20;padding:18px}.modal-backdrop.show{display:flex}.modal{width:560px;max-height:90vh;overflow:auto;background:#fff;border-radius:13px;box-shadow:0 18px 45px #1416282e}.modal.large{width:720px}.modal-head{height:64px;border-bottom:1px solid var(--line);padding:0 21px;display:flex;align-items:center;justify-content:space-between}.modal-head h2{font-size:17px;margin:0}.close{width:33px;height:33px;border:0;border-radius:7px;background:transparent;font-size:21px;color:#707482}.close:hover{background:#f0f1f5}.modal-body{padding:20px}.form-group{margin-bottom:15px}.form-group label{display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:#4a4d58}.input,.textarea,.form-select{width:100%;border:1px solid #dfe1e8;border-radius:7px;background:#fbfcfe;outline:0;padding:10px;font-size:12px}.input{height:39px}.textarea{min-height:90px;resize:vertical}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.modal-foot{height:67px;border-top:1px solid var(--line);background:#fcfcfd;padding:12px 20px;display:flex;justify-content:flex-end;gap:8px}.member-list{display:flex;flex-direction:column;gap:8px}.member-row{border:1px solid #e1e3e9;border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:11px}.member-info{flex:1}.member-name{font-size:12px;font-weight:700}.member-role{font-size:10px;color:#858894;margin-top:4px}.member-actions{display:flex;gap:5px}.member-actions button{height:31px;border:1px solid #dfe1e8;border-radius:6px;background:#fff;font-size:10px;padding:0 9px}.member-actions .danger:hover{color:#c3343e;background:#fff0f1}.toast{position:fixed;right:22px;bottom:22px;background:#171a25;color:#fff;padding:12px 16px;border-radius:8px;font-size:12px;box-shadow:0 18px 45px #1416282e;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1;transform:none}
 @media(max-width:900px){.sidebar{width:72px;flex-basis:72px;padding:0 8px}.brand-word,.brand-sub,.section-title,.project-name,.team-btn span,.sidebar-footer div{display:none}.brand-side{height:80px}.brand-side img{width:42px}.project,.team-btn{justify-content:center;padding:0}.sidebar-footer{justify-content:center}.sidebar-footer img{width:38px}.topbar{padding:0 16px}.identity h1{font-size:22px}.identity p{display:none}.toolbar{padding:10px 16px}.board-wrap{padding:16px}.board{grid-template-columns:repeat(5,260px)}}
+
+/* =========================================================
+   CRIANDO PLANNER — UI PATCH v2
+   Contraste, modais, equipe e responsividade
+   ========================================================= */
+
+.sidebar{
+  box-shadow:8px 0 28px rgba(7,10,20,.12);
+}
+.project,.team-btn{
+  color:#f4f6ff;
+}
+.project-icon,.team-icon{
+  color:#ffffff;
+  background:#384363;
+  border:1px solid #536184;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 3px 10px rgba(0,0,0,.18);
+}
+.team-icon{
+  background:#2458b8;
+  border-color:#3e79df;
+}
+.project:hover,.team-btn:hover{
+  color:#fff;
+  background:#171e32;
+  border-color:#2b3656;
+}
+.project.active{
+  color:#fff;
+  background:linear-gradient(90deg,#29205e,#30276d);
+  border-color:#554aa4;
+}
+.project.active .project-icon{
+  background:#6756dc;
+  border-color:#8c7ff0;
+}
+.collapse:hover{
+  color:#fff;
+  background:#171e32;
+  border-radius:7px;
+}
+
+.modal-backdrop{
+  padding:clamp(10px,3vw,24px);
+  overflow:auto;
+}
+.modal{
+  width:min(560px,100%);
+  max-height:min(90vh,760px);
+  display:flex;
+  flex-direction:column;
+}
+.modal.large{
+  width:min(820px,100%);
+  max-height:min(88vh,780px);
+}
+.modal-head{
+  flex:0 0 64px;
+}
+.modal-body{
+  overflow:auto;
+}
+.modal-foot{
+  flex:0 0 auto;
+}
+
+.team-modal-head{
+  height:auto;
+  min-height:82px;
+  padding:18px 22px;
+  align-items:flex-start;
+}
+.team-title-wrap h2{
+  font-size:19px;
+  letter-spacing:-.2px;
+}
+.team-title-wrap p{
+  margin:5px 0 0;
+  color:#858894;
+  font-size:11px;
+}
+.team-head-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.team-summary{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-bottom:16px;
+}
+.team-stat{
+  border:1px solid #e2e4eb;
+  border-radius:11px;
+  background:linear-gradient(180deg,#fff,#fafbfe);
+  padding:13px 14px;
+}
+.team-stat-label{
+  color:#858995;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  font-weight:700;
+}
+.team-stat-value{
+  margin-top:5px;
+  font-size:21px;
+  line-height:1;
+  font-weight:800;
+  color:#252834;
+}
+.team-toolbar{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:13px;
+}
+.team-search{
+  height:40px;
+  flex:1;
+  min-width:0;
+  border:1px solid #dfe1e8;
+  border-radius:8px;
+  padding:0 12px 0 38px;
+  outline:0;
+  font-size:12px;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%237d8190' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-4-4'/%3E%3C/svg%3E") 12px center no-repeat;
+}
+.team-search:focus{
+  border-color:#897ce7;
+  box-shadow:0 0 0 3px #897ce71b;
+}
+.team-list{
+  min-height:120px;
+}
+.team-member-row{
+  border:1px solid #e1e3e9;
+  border-radius:11px;
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:.16s ease;
+  background:#fff;
+}
+.team-member-row + .team-member-row{
+  margin-top:8px;
+}
+.team-member-row:hover{
+  border-color:#cfd1dc;
+  box-shadow:0 7px 18px rgba(32,36,58,.07);
+  transform:translateY(-1px);
+}
+.team-avatar{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#7835bd,#4d3bba);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-size:11px;
+  font-weight:800;
+}
+.team-member-main{
+  min-width:0;
+  flex:1;
+}
+.team-member-name{
+  font-size:12px;
+  font-weight:800;
+  color:#262933;
+}
+.team-member-role{
+  font-size:10px;
+  line-height:1.45;
+  color:#858894;
+  margin-top:4px;
+  overflow-wrap:anywhere;
+}
+.team-member-meta{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:6px;
+}
+.team-chip{
+  border-radius:999px;
+  padding:4px 7px;
+  background:#f1f2f7;
+  color:#626775;
+  font-size:9px;
+  font-weight:700;
+}
+.team-member-actions{
+  display:flex;
+  gap:6px;
+  flex:0 0 auto;
+}
+.team-member-actions button{
+  height:32px;
+  border:1px solid #dfe1e8;
+  border-radius:7px;
+  background:#fff;
+  color:#4d5160;
+  font-size:10px;
+  font-weight:600;
+  padding:0 10px;
+}
+.team-member-actions button:hover{
+  background:#f5f6fa;
+  border-color:#cfd2dc;
+}
+.team-member-actions .danger:hover{
+  color:#c3343e;
+  background:#fff0f1;
+  border-color:#f0c8cc;
+}
+.team-empty{
+  border:1px dashed #d9dbe3;
+  border-radius:11px;
+  padding:30px 18px;
+  text-align:center;
+  color:#7e8290;
+  font-size:11px;
+  background:#fafbfc;
+}
+
+@media(max-width:900px){
+  .topbar{
+    height:82px;
+  }
+  .identity img{
+    width:46px;
+    height:58px;
+  }
+  .user-area{
+    gap:8px;
+  }
+  .user span:not(.avatar){
+    display:none;
+  }
+  .toolbar{
+    height:auto;
+    min-height:70px;
+    flex-wrap:wrap;
+  }
+  .search{
+    min-width:180px;
+  }
+  .select{
+    min-width:150px;
+  }
+  .top-actions{
+    margin-left:0;
+  }
+  .board-wrap{
+    overflow:auto;
+  }
+  .modal-backdrop{
+    align-items:flex-start;
+    padding:10px;
+  }
+  .modal,.modal.large{
+    width:100%;
+    max-height:calc(100vh - 20px);
+    border-radius:12px;
+  }
+  .modal-body{
+    padding:16px;
+  }
+  .modal-foot{
+    padding:10px 16px;
+  }
+  .team-summary{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+
+@media(max-width:600px){
+  .sidebar{
+    width:60px;
+    flex-basis:60px;
+    padding:0 6px;
+  }
+  .brand-side{
+    height:68px;
+  }
+  .brand-side img{
+    width:36px;
+    height:48px;
+    margin:0;
+  }
+  .project,.team-btn{
+    height:44px;
+  }
+  .project-icon,.team-icon{
+    width:30px;
+    height:30px;
+  }
+  .main{
+    min-width:0;
+  }
+  .topbar{
+    padding:0 11px;
+  }
+  .identity h1{
+    font-size:18px;
+  }
+  .identity img{
+    width:38px;
+    height:48px;
+  }
+  .toolbar{
+    padding:10px 11px;
+    gap:8px;
+  }
+  .search{
+    flex:1 1 100%;
+    max-width:none;
+  }
+  .select{
+    flex:1 1 calc(50% - 4px);
+    min-width:0;
+  }
+  .advanced,.top-actions .btn:first-child{
+    display:none;
+  }
+  .top-actions{
+    width:100%;
+  }
+  .top-actions .primary{
+    width:100%;
+  }
+  .team-modal-head{
+    padding:15px 16px;
+  }
+  .team-title-wrap h2{
+    font-size:17px;
+  }
+  .team-summary{
+    gap:7px;
+  }
+  .team-stat{
+    padding:11px 10px;
+  }
+  .team-stat-value{
+    font-size:18px;
+  }
+  .team-stat-label{
+    font-size:8px;
+  }
+  .team-toolbar{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .team-member-row{
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .team-member-actions{
+    width:100%;
+    padding-left:54px;
+  }
+  .team-member-actions button{
+    flex:1;
+  }
+  .form-row{
+    grid-template-columns:1fr;
+    gap:0;
+  }
+  .modal-foot{
+    flex-wrap:wrap;
+  }
+  .modal-foot .btn{
+    flex:1;
+    min-width:120px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -40,7 +422,7 @@
 </main></div>
 
 <div id="taskModal" class="modal-backdrop" onclick="backdrop(event,'taskModal')"><div class="modal">
-<div class="modal-head"><h2 id="taskModalTitle">Nova tarefa</h2><button class="close" onclick="closeModal('taskModal')">×</button></div>
+<div class="modal-head"><h2 id="taskModalTitle">Nova tarefa</h2><button class="close" type="button" onclick="closeModal('taskModal')">×</button></div>
 <div class="modal-body">
 <input type="hidden" id="taskId">
 <div class="form-group"><label>Título</label><input id="taskTitle" class="input" placeholder="Ex.: Conectando o jogo online"></div>
@@ -48,19 +430,40 @@
 <div class="form-row"><div class="form-group"><label>Projeto</label><select id="taskProject" class="form-select"></select></div><div class="form-group"><label>Status</label><select id="taskStatus" class="form-select"></select></div></div>
 <div class="form-row"><div class="form-group"><label>Início</label><input id="taskStart" type="date" class="input"></div><div class="form-group"><label>Fim</label><input id="taskEnd" type="date" class="input"></div></div>
 <div class="form-group"><label>Responsáveis</label><div id="taskMembers" class="member-list"></div></div>
-</div><div class="modal-foot"><button class="btn" onclick="closeModal('taskModal')">Cancelar</button><button class="btn primary" onclick="saveTask()">Salvar tarefa</button></div>
+</div><div class="modal-foot"><button class="btn" type="button" onclick="closeModal('taskModal')">Cancelar</button><button class="btn primary" onclick="saveTask()">Salvar tarefa</button></div>
 </div></div>
 
 <div id="teamModal" class="modal-backdrop" onclick="backdrop(event,'teamModal')"><div class="modal large">
-<div class="modal-head"><h2>Gerenciar equipe</h2><button class="close" onclick="closeModal('teamModal')">×</button></div>
-<div class="modal-body"><div id="memberList" class="member-list"></div></div>
-<div class="modal-foot"><button class="btn" onclick="closeModal('teamModal')">Fechar</button><button class="btn primary" onclick="openMember()">＋ Adicionar membro</button></div>
+<div class="modal-head team-modal-head">
+  <div class="team-title-wrap">
+    <h2>Gerenciar equipe</h2>
+    <p>Organize responsáveis, funções e participação nas entregas.</p>
+  </div>
+  <div class="team-head-actions">
+    <button class="close" type="button" aria-label="Fechar" onclick="closeModal('teamModal')">×</button>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="team-summary">
+    <div class="team-stat"><div class="team-stat-label">Membros</div><div id="teamCount" class="team-stat-value">0</div></div>
+    <div class="team-stat"><div class="team-stat-label">Tarefas atribuídas</div><div id="teamTaskCount" class="team-stat-value">0</div></div>
+    <div class="team-stat"><div class="team-stat-label">Projetos ativos</div><div id="teamProjectCount" class="team-stat-value">0</div></div>
+  </div>
+  <div class="team-toolbar">
+    <input id="teamSearch" class="team-search" type="search" placeholder="Pesquisar membro..." oninput="renderTeam()">
+    <button class="btn primary" type="button" onclick="openMember()">＋ Adicionar membro</button>
+  </div>
+  <div id="memberList" class="member-list team-list"></div>
+</div>
+<div class="modal-foot">
+  <button class="btn" type="button" onclick="closeModal('teamModal')">Fechar</button>
+</div>
 </div></div>
 
 <div id="memberModal" class="modal-backdrop" onclick="backdrop(event,'memberModal')"><div class="modal">
-<div class="modal-head"><h2 id="memberTitle">Adicionar membro</h2><button class="close" onclick="closeModal('memberModal')">×</button></div>
+<div class="modal-head"><h2 id="memberTitle">Adicionar membro</h2><button class="close" type="button" onclick="closeModal('memberModal')">×</button></div>
 <div class="modal-body"><input type="hidden" id="memberId"><div class="form-group"><label>Nome</label><input id="memberName" class="input"></div><div class="form-group"><label>Função / observação</label><input id="memberRole" class="input"></div></div>
-<div class="modal-foot"><button class="btn" onclick="closeModal('memberModal')">Cancelar</button><button class="btn primary" onclick="saveMember()">Salvar membro</button></div>
+<div class="modal-foot"><button class="btn" type="button" onclick="closeModal('memberModal')">Cancelar</button><button class="btn primary" onclick="saveMember()">Salvar membro</button></div>
 </div></div>
 <div id="toast" class="toast"></div>
 
@@ -121,16 +524,94 @@ function saveTask(){
  let id=document.getElementById("taskId").value,d={title,desc:document.getElementById("taskDesc").value.trim(),project:document.getElementById("taskProject").value,status:document.getElementById("taskStatus").value,start:document.getElementById("taskStart").value,end:document.getElementById("taskEnd").value,members:[...document.querySelectorAll("#taskMembers input:checked")].map(x=>x.value)};
  if(id)Object.assign(tasks.find(x=>x.id==id),d);else tasks.push({id:"t"+Date.now(),...d});close("taskModal");render();toast(id?"Tarefa atualizada.":"Tarefa criada.")
 }
-function openTeam(){renderTeam();show("teamModal")}
-function renderTeam(){document.getElementById("memberList").innerHTML=members.map(m=>`<div class="member-row"><div class="avatar">${initials(m.name)}</div><div class="member-info"><div class="member-name">${esc(m.name)}</div><div class="member-role">${esc(m.role)}</div></div><div class="member-actions"><button onclick="editMember('${m.id}')">Editar</button><button class="danger" onclick="deleteMember('${m.id}')">Excluir</button></div></div>`).join("")}
-function openMember(id=""){let m=id&&members.find(x=>x.id==id);document.getElementById("memberTitle").textContent=m?"Editar membro":"Adicionar membro";document.getElementById("memberId").value=id;document.getElementById("memberName").value=m?.name||"";document.getElementById("memberRole").value=m?.role||"";show("memberModal")}
+function openTeam(){
+  renderTeam();
+  show("teamModal");
+}
+function renderTeam(){
+  let q=(document.getElementById("teamSearch")?.value||"").trim().toLowerCase();
+  let filtered=members.filter(m=>(m.name+" "+m.role).toLowerCase().includes(q));
+  let assignedTasks=tasks.filter(t=>t.members?.length).length;
+  let activeProjects=new Set(tasks.filter(t=>t.status!="concluido").map(t=>t.project)).size;
+
+  document.getElementById("teamCount").textContent=members.length;
+  document.getElementById("teamTaskCount").textContent=assignedTasks;
+  document.getElementById("teamProjectCount").textContent=activeProjects;
+
+  document.getElementById("memberList").innerHTML=filtered.length?filtered.map(m=>{
+    let memberTasks=tasks.filter(t=>t.members?.includes(m.id)).length;
+    let projects=new Set(tasks.filter(t=>t.members?.includes(m.id)).map(t=>t.project)).size;
+    return `<div class="team-member-row">
+      <div class="team-avatar">${initials(m.name)}</div>
+      <div class="team-member-main">
+        <div class="team-member-name">${esc(m.name)}</div>
+        <div class="team-member-role">${esc(m.role||"Sem função definida.")}</div>
+        <div class="team-member-meta">
+          <span class="team-chip">${memberTasks} ${memberTasks==1?"tarefa":"tarefas"}</span>
+          <span class="team-chip">${projects} ${projects==1?"projeto":"projetos"}</span>
+        </div>
+      </div>
+      <div class="team-member-actions">
+        <button type="button" onclick="editMember('${m.id}')">Editar</button>
+        <button type="button" class="danger" onclick="deleteMember('${m.id}')">Excluir</button>
+      </div>
+    </div>`;
+  }).join(""):`<div class="team-empty">Nenhum membro corresponde à pesquisa.</div>`;
+}
+function openMember(id=""){
+  let m=id&&members.find(x=>x.id==id);
+  document.getElementById("memberTitle").textContent=m?"Editar membro":"Adicionar membro";
+  document.getElementById("memberId").value=id;
+  document.getElementById("memberName").value=m?.name||"";
+  document.getElementById("memberRole").value=m?.role||"";
+  show("memberModal");
+  setTimeout(()=>document.getElementById("memberName").focus(),0);
+}
 function editMember(id){openMember(id)}
-function saveMember(){let name=document.getElementById("memberName").value.trim();if(!name)return toast("Informe o nome.");let id=document.getElementById("memberId").value;if(id){let m=members.find(x=>x.id==id);m.name=name;m.role=document.getElementById("memberRole").value.trim()}else members.push({id:"m"+Date.now(),name,role:document.getElementById("memberRole").value.trim()});close("memberModal");fill();renderTeam();render();toast("Equipe atualizada.")}
-function deleteMember(id){let m=members.find(x=>x.id==id);if(!confirm(`Excluir ${m.name}?`))return;tasks.forEach(t=>t.members=t.members.filter(x=>x!=id));members=members.filter(x=>x.id!=id);fill();renderTeam();render();toast("Membro excluído.")}
+function saveMember(){
+  let name=document.getElementById("memberName").value.trim();
+  if(!name)return toast("Informe o nome.");
+  let id=document.getElementById("memberId").value;
+  let role=document.getElementById("memberRole").value.trim();
+  if(id){
+    let m=members.find(x=>x.id==id);
+    if(m){m.name=name;m.role=role;}
+  }else{
+    members.push({id:"m"+Date.now(),name,role});
+  }
+  closeModal("memberModal");
+  fill();
+  renderTeam();
+  render();
+  toast("Equipe atualizada.");
+}
+function deleteMember(id){
+  let m=members.find(x=>x.id==id);
+  if(!m||!confirm(`Excluir ${m.name}?`))return;
+  tasks.forEach(t=>t.members=t.members.filter(x=>x!=id));
+  members=members.filter(x=>x.id!=id);
+  fill();
+  renderTeam();
+  render();
+  toast("Membro excluído.");
+}
 function clearFilters(){document.getElementById("search").value="";document.getElementById("statusFilter").value="";document.getElementById("memberFilter").value="";render()}
-function show(id){document.getElementById(id).classList.add("show")}function close(id){document.getElementById(id).classList.remove("show")}function backdrop(e,id){if(e.target.id==id)close(id)}
+function show(id){
+  const modal=document.getElementById(id);
+  if(!modal)return;
+  modal.classList.add("show");
+}
+function closeModal(id){
+  const modal=document.getElementById(id);
+  if(!modal)return;
+  modal.classList.remove("show");
+}
+function close(id){closeModal(id)}
+function backdrop(e,id){
+  if(e.target.id==id)closeModal(id);
+}
 function toast(m){let x=document.getElementById("toast");x.textContent=m;x.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>x.classList.remove("show"),2200)}
-document.addEventListener("keydown",e=>{if(e.key=="Escape")document.querySelectorAll(".modal-backdrop.show").forEach(x=>x.classList.remove("show"))});
+document.addEventListener("keydown",e=>{if(e.key=="Escape")document.querySelectorAll(".modal-backdrop.show").forEach(x=>closeModal(x.id))});
 init();
 </script>
 </body>
