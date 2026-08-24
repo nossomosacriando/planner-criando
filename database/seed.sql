@@ -4,9 +4,9 @@
 
 -- Insert default members
 INSERT INTO public.members (id, name, role, avatar) VALUES
-('a1111111-1111-1111-1111-111111111111', 'Carlos Santana', 'Tech Lead', 'CS'),
-('b2222222-2222-2222-2222-222222222222', 'Davi Silveira', 'Fullstack Developer', 'DS'),
-('c3333333-3333-3333-3333-333333333333', 'Willian Gonçalves', 'Product Owner', 'WG')
+('a1111111-1111-1111-1111-111111111111', 'Carlos Santana', 'Responsável por O Leitor · apoio em O Lobby e Lime Verso', 'CS'),
+('b2222222-2222-2222-2222-222222222222', 'Davi Silveira', 'Responsável por Lime Verso · apoio em O Lobby', 'DS'),
+('c3333333-3333-3333-3333-333333333333', 'Willian Oliveira', 'Responsável por Harvast Words · apoio em O Lobby', 'WO')
 ON CONFLICT (id) DO NOTHING;
 
 -- Insert default projects (Willian = Owner do Harvast / Carlos = Owner dos demais)
@@ -29,17 +29,25 @@ INSERT INTO public.project_members (project_id, member_id, role) VALUES
 ('44444444-4444-4444-4444-444444444444', 'b2222222-2222-2222-2222-222222222222', 'member')
 ON CONFLICT DO NOTHING;
 
-
--- Insert initial tasks
+-- Insert initial tasks (v3 tasks)
 INSERT INTO public.tasks (id, project_id, title, description, status, start_date, end_date, created_by) VALUES
-('a1111111-2222-3333-4444-555555555555', '11111111-1111-1111-1111-111111111111', 'Arquitetura Backend Supabase', 'Estruturação do banco PostgreSQL, tabelas, RLS e subscriptions Realtime.', 'in_progress', CURRENT_DATE, CURRENT_DATE + INTERVAL '7 days', 'a1111111-1111-1111-1111-111111111111'),
-('a2222222-2222-3333-4444-555555555555', '11111111-1111-1111-1111-111111111111', 'Integração Supabase Auth', 'Substituir perfil mock visual por autenticação via Supabase Auth e sessão do usuário.', 'backlog', CURRENT_DATE + INTERVAL '2 days', CURRENT_DATE + INTERVAL '10 days', 'b2222222-2222-2222-2222-222222222222')
+('a1111111-0000-0000-0000-000000000001', '11111111-1111-1111-1111-111111111111', 'Conectando o jogo online', 'Implementar e estruturar a conexão online do jogo.', 'andamento', '2026-05-24', '2026-07-06', 'c3333333-3333-3333-3333-333333333333'),
+('a1111111-0000-0000-0000-000000000002', '22222222-2222-2222-2222-222222222222', 'Globalização', 'Trabalhar a globalização e expansão do projeto.', 'pausado', '2026-05-18', '2026-06-01', 'a1111111-1111-1111-1111-111111111111'),
+('a1111111-0000-0000-0000-000000000003', '22222222-2222-2222-2222-222222222222', 'Correção de bugs', 'Corrigir bugs identificados durante os testes.', 'testes', '2026-06-26', '2026-07-02', 'a1111111-1111-1111-1111-111111111111'),
+('a1111111-0000-0000-0000-000000000004', '33333333-3333-3333-3333-333333333333', 'Refinamento', 'Refinamento geral da aplicação e experiência do usuário.', 'andamento', '2026-05-20', '2026-06-10', 'a1111111-1111-1111-1111-111111111111'),
+('a1111111-0000-0000-0000-000000000005', '44444444-4444-4444-4444-444444444444', 'Desenvolvimento', 'Desenvolvimento das funcionalidades principais do projeto.', 'andamento', '2026-05-25', '2026-06-15', 'b2222222-2222-2222-2222-222222222222')
 ON CONFLICT (id) DO NOTHING;
 
 -- Assign members to tasks
 INSERT INTO public.task_members (task_id, member_id) VALUES
-('a1111111-2222-3333-4444-555555555555', 'a1111111-1111-1111-1111-111111111111'),
-('a1111111-2222-3333-4444-555555555555', 'b2222222-2222-2222-2222-222222222222'),
-('a2222222-2222-3333-4444-555555555555', 'c3333333-3333-3333-3333-333333333333')
+('a1111111-0000-0000-0000-000000000001', 'c3333333-3333-3333-3333-333333333333'),
+('a1111111-0000-0000-0000-000000000002', 'a1111111-1111-1111-1111-111111111111'),
+('a1111111-0000-0000-0000-000000000003', 'a1111111-1111-1111-1111-111111111111'),
+('a1111111-0000-0000-0000-000000000004', 'a1111111-1111-1111-1111-111111111111'),
+('a1111111-0000-0000-0000-000000000004', 'b2222222-2222-2222-2222-222222222222'),
+('a1111111-0000-0000-0000-000000000004', 'c3333333-3333-3333-3333-333333333333'),
+('a1111111-0000-0000-0000-000000000005', 'a1111111-1111-1111-1111-111111111111'),
+('a1111111-0000-0000-0000-000000000005', 'b2222222-2222-2222-2222-222222222222')
 ON CONFLICT DO NOTHING;
+
 
