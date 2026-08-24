@@ -796,11 +796,24 @@ function openMember(id=""){
   setTimeout(()=>document.getElementById("memberName").focus(),0);
 }
 function editMember(id){openMember(id)}
-function saveMember(){
+async function saveMember(){
   let name=document.getElementById("memberName").value.trim();
   if(!name)return toast("Informe o nome.");
   let id=document.getElementById("memberId").value;
   let role=document.getElementById("memberRole").value.trim();
+
+  if (window.PlannerDataService) {
+    try {
+      await window.PlannerDataService.MembersService.saveMember({id: id || null, name, role});
+      await loadBaseData();
+      closeModal("memberModal");
+      toast(id ? "Membro atualizado no Supabase." : "Membro adicionado no Supabase.");
+      return;
+    } catch (e) {
+      console.error("Erro ao salvar membro no Supabase:", e);
+    }
+  }
+
   if(id){
     let m=members.find(x=>x.id==id);
     if(m){m.name=name;m.role=role;}
@@ -813,9 +826,23 @@ function saveMember(){
   render();
   toast("Equipe atualizada.");
 }
-function deleteMember(id){
+
+async function deleteMember(id){
   let m=members.find(x=>x.id==id);
   if(!m||!confirm(`Excluir ${m.name}?`))return;
+
+  if (window.PlannerDataService) {
+    try {
+      await window.PlannerDataService.MembersService.deleteMember(id);
+      await loadBaseData();
+      await loadTasks();
+      toast("Membro excluído do Supabase.");
+      return;
+    } catch (e) {
+      console.error("Erro ao excluir membro no Supabase:", e);
+    }
+  }
+
   tasks.forEach(t=>t.members=t.members.filter(x=>x!=id));
   members=members.filter(x=>x.id!=id);
   fill();
@@ -823,6 +850,7 @@ function deleteMember(id){
   render();
   toast("Membro excluído.");
 }
+
 function clearFilters(){document.getElementById("search").value="";document.getElementById("statusFilter").value="";document.getElementById("memberFilter").value="";render()}
 
 const profiles={
