@@ -1,0 +1,8 @@
+# Configurações de ambiente local com credenciais
+config.js
+
+# Sistema operacional e IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
