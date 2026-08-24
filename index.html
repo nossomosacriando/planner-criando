@@ -327,6 +327,9 @@
   background:#f5f6fa;
   border-color:#cfd2dc;
 }
+.user-menu-container{
+  position:relative;
+}
 .user-dropdown-menu{
   display:none;
   position:absolute;
@@ -336,12 +339,12 @@
   background:#ffffff;
   border:1px solid #e2e8f0;
   border-radius:10px;
-  box-shadow:0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.05);
+  box-shadow:0 10px 25px -5px rgba(0,0,0,0.15), 0 8px 10px -6px rgba(0,0,0,0.08);
   padding:6px;
-  z-index:100;
+  z-index:9999;
 }
 .user-dropdown-menu.show{
-  display:block;
+  display:block !important;
 }
 .user-dropdown-item{
   display:flex;
@@ -730,23 +733,21 @@
 <aside class="sidebar">
   <div class="brand-side"><img id="sideLogo"><div><div class="brand-word">CRIANDO</div><div class="brand-sub">PLANNER</div></div></div>
   <div class="section-title">Projetos</div><div id="projects"></div>
-  <div class="section-title">Administração</div>
-  <button class="team-btn" onclick="openProjectModal()"><div class="team-icon">⚙️</div><span>Gerenciar projetos</span></button>
-  <button class="team-btn" onclick="openTeam()"><div class="team-icon">👥</div><span>Gerenciar equipe</span></button>
+  <div id="adminSection">
+    <div class="section-title">Administração</div>
+    <button class="team-btn" onclick="openProjectModal()"><div class="team-icon">⚙️</div><span>Gerenciar projetos</span></button>
+    <button class="team-btn" onclick="openTeam()"><div class="team-icon">👥</div><span>Gerenciar equipe</span></button>
+  </div>
   <div class="sidebar-footer"><img id="footerLogo"><div><div class="footer-brand">CRIANDO © 2026</div><div class="footer-copy">Tecnologia que cria futuros.</div></div><button class="collapse">‹</button></div>
 </aside>
 <main class="main">
 <header class="topbar">
   <div class="identity"><img id="mainLogo"><div><h1>CRIANDO</h1><p>Gerenciamento de projetos e tarefas</p></div></div>
-  <div class="user-area">
+  <div id="userHeaderContainer" class="user-area" style="display:none;">
   <button class="notification" type="button" aria-label="Notificações">♧<span class="badge">3</span></button>
   <div class="user">
     <div id="profileAvatar" class="profile-avatar">CS</div>
-    <select id="profileSelect" class="profile-select" aria-label="Selecionar perfil" onchange="changeProfile(this.value)">
-      <option value="carlos">Carlos Santana (Carlos)</option>
-      <option value="davi">Davi Silveira (Davi)</option>
-      <option value="willian">Willian Gonçalves (Will)</option>
-    </select>
+    <div id="profileNameDisplay" class="profile-name-text" style="font-weight:600; font-size:13px; color:#334155; margin-left:4px;">Carlos Santana</div>
     <div class="user-menu-container">
       <button class="btn-user-menu" type="button" aria-label="Opções do usuário" onclick="toggleUserDropdown(event)" title="Mais opções">⋮</button>
       <div id="userDropdownMenu" class="user-dropdown-menu">
@@ -757,11 +758,11 @@
           </div>
         </div>
         <div class="user-dropdown-divider"></div>
-        <button type="button" class="user-dropdown-item" onclick="closeUserDropdown(); openChangePasswordModal();">
+        <button type="button" class="user-dropdown-item" onclick="if(window.closeUserDropdown) window.closeUserDropdown(); if(window.openChangePasswordModal) window.openChangePasswordModal();">
           <span>🔑</span> <span>Alterar Senha</span>
         </button>
         <div class="user-dropdown-divider"></div>
-        <button type="button" class="user-dropdown-item danger" onclick="closeUserDropdown(); logout();">
+        <button type="button" class="user-dropdown-item danger" onclick="if(window.closeUserDropdown) window.closeUserDropdown(); if(window.logout) window.logout();">
           <span>🚪</span> <span>Sair</span>
         </button>
       </div>
@@ -769,7 +770,7 @@
   </div>
 </div>
 </header>
-<section class="toolbar">
+<section id="toolbarSection" class="toolbar">
   <input id="search" class="search" placeholder="Pesquisar tarefas..." oninput="render()">
   <select id="statusFilter" class="select" onchange="render()"><option value="">Todos os status</option></select>
   <select id="memberFilter" class="select" onchange="render()"><option value="">Todos os membros</option></select>
@@ -880,6 +881,8 @@
   <input type="hidden" id="memberId">
   <div class="form-group"><label>Nome do Membro</label><input id="memberName" class="input" placeholder="Ex.: Maria Silva"></div>
   <div class="form-group"><label>Função / Descrição</label><input id="memberRole" class="input" placeholder="Ex.: Responsável por O Leitor"></div>
+  <div class="form-group"><label>Pergunta Secreta (para recuperação de senha)</label><input id="memberSecurityQuestion" class="input" placeholder="Ex.: Qual o nome do seu primeiro pet?"></div>
+  <div class="form-group"><label>Resposta Secreta</label><input id="memberSecurityAnswer" class="input" placeholder="Digite a resposta secreta"></div>
   <div class="form-group"><label>Projetos de Atuação (Atribuídos)</label><div id="memberProjects" class="member-list"></div></div>
 </div>
 <div class="modal-foot"><button class="btn" type="button" onclick="closeModal('memberModal')">Cancelar</button><button class="btn primary" type="button" onclick="saveMember()">Salvar membro</button></div>
@@ -924,13 +927,17 @@
 </div></div>
 
 <div id="loginModal" class="modal-backdrop" onclick="if(isAuthenticated) backdrop(event,'loginModal')"><div class="modal" style="max-width:380px;">
-<div class="modal-head"><h2 id="loginModalTitle">Autenticação de Perfil</h2></div>
+<div class="modal-head"><h2 id="loginModalTitle">Autenticação do Sistema</h2></div>
 <div class="modal-body">
-  <p id="loginModalSub" style="font-size:13px; color:var(--text-dim); margin-bottom:12px;"></p>
+  <p id="loginModalSub" style="font-size:13px; color:var(--text-dim); margin-bottom:12px;">Digite suas credenciais para acessar o Planner:</p>
+  <div class="form-group">
+    <label>Usuário</label>
+    <input id="loginUserInput" type="text" class="input" placeholder="Digite seu usuário ou e-mail" onkeydown="if(event.key==='Enter')document.getElementById('loginPasswordInput').focus()">
+  </div>
   <div class="form-group">
     <label>Senha de Acesso</label>
     <div class="password-wrapper">
-      <input id="loginPasswordInput" type="password" class="input" placeholder="Digite a senha do perfil" onkeydown="if(event.key==='Enter')submitProfileLogin()">
+      <input id="loginPasswordInput" type="password" class="input" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')submitProfileLogin()">
       <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('loginPasswordInput', this)" title="Exibir/ocultar senha">👁️</button>
     </div>
   </div>
@@ -938,10 +945,68 @@
     <input type="checkbox" id="rememberMeInput">
     <span>Lembrar de mim neste dispositivo</span>
   </label>
+  <div style="margin-top:12px; text-align:right;">
+    <button type="button" style="background:none; border:none; color:#6366f1; font-size:12px; cursor:pointer; text-decoration:underline;" onclick="openForgotPasswordModal()">Esqueci minha senha</button>
+  </div>
 </div>
 <div class="modal-foot">
   <button class="btn" type="button" onclick="cancelProfileLogin()">Cancelar</button>
   <button class="btn primary" type="button" onclick="submitProfileLogin()">Entrar</button>
+</div>
+</div></div>
+
+<!-- Modal Esqueci Minha Senha / Pergunta Secreta -->
+<div id="forgotPasswordModal" class="modal-backdrop" onclick="backdrop(event,'forgotPasswordModal')"><div class="modal" style="max-width:400px;">
+<div class="modal-head"><h2>Recuperar Senha por Pergunta Secreta</h2><button class="close" type="button" onclick="closeModal('forgotPasswordModal')">×</button></div>
+<div class="modal-body">
+  <!-- Etapa 1: Seleção de Usuário e Pergunta Secreta -->
+  <div id="secretQuestionStep1">
+    <p style="font-size:13px; color:var(--text-dim); margin-bottom:14px;">Selecione o usuário e responda à pergunta secreta cadastrada para redefinir sua senha:</p>
+    <div class="form-group">
+      <label>Selecione o Usuário</label>
+      <select id="resetUserSelect" class="form-select input" onchange="onResetUserChange(this.value)">
+        <option value="Carlos">Carlos Santana</option>
+        <option value="Davi">Davi Silveira</option>
+        <option value="Will">Willian Gonçalves</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Pergunta Secreta Cadastrada</label>
+      <div id="displayedSecurityQuestion" style="padding:10px; background:var(--bg-card,#f8fafc); border:1px solid var(--border,#e2e8f0); border-radius:8px; font-weight:600; font-size:13px; color:var(--text,#1e293b);">
+        Carregando pergunta...
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Sua Resposta Secreta</label>
+      <input id="resetSecurityAnswerInput" class="input" placeholder="Digite sua resposta secreta">
+    </div>
+    <button class="btn primary" type="button" style="width:100%; margin-top:8px;" onclick="verifySecretAnswer()">🔑 Validar Resposta Secreta</button>
+  </div>
+
+  <!-- Etapa 2: Redefinição da Nova Senha -->
+  <div id="secretQuestionStep2" style="display:none; margin-top:8px;">
+    <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px; margin-bottom:12px; font-size:12px; color:#15803d;">
+      ✅ Resposta secreta confirmada com sucesso! Digite e confirme sua nova senha abaixo:
+    </div>
+    <div class="form-group">
+      <label>Nova Senha</label>
+      <div class="password-wrapper">
+        <input id="resetNewPasswordInput" type="password" class="input" placeholder="Digite a nova senha">
+        <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('resetNewPasswordInput', this)" title="Exibir/ocultar senha">👁️</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Confirmar Nova Senha</label>
+      <div class="password-wrapper">
+        <input id="resetConfirmPasswordInput" type="password" class="input" placeholder="Confirme a nova senha">
+        <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('resetConfirmPasswordInput', this)" title="Exibir/ocultar senha">👁️</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-foot">
+  <button class="btn" type="button" onclick="closeModal('forgotPasswordModal')">Cancelar</button>
+  <button id="btnSubmitResetPassword" class="btn primary" type="button" style="display:none;" onclick="submitForgotPasswordReset()">Redefinir Senha</button>
 </div>
 </div></div>
 
@@ -956,9 +1021,9 @@ const STATUSES=[
 {id:"backlog",name:"Backlog",dot:"backlog"},{id:"andamento",name:"Em andamento",dot:"andamento"},
 {id:"testes",name:"Em testes",dot:"testes"},{id:"pausado",name:"Pausado",dot:"pausado"},{id:"concluido",name:"Concluído",dot:"concluido"}];
 let members=[
-{id:"a1111111-1111-1111-1111-111111111111",username:"Carlos",password:"S&nha@master",role_level:"master",name:"Carlos Santana",role:"Responsável por O Leitor · apoio em O Lobby e Lime Verso"},
-{id:"c3333333-3333-3333-3333-333333333333",username:"Will",password:"S&nha@123",role_level:"moderator",name:"Willian Gonçalves",role:"Responsável por Harvast Words · apoio em O Lobby"},
-{id:"b2222222-2222-2222-2222-222222222222",username:"Davi",password:"S&nha@123",role_level:"user",name:"Davi Silveira",role:"Responsável por Lime Verso · apoio em O Lobby"}];
+{id:"a1111111-1111-1111-1111-111111111111",username:"Carlos",password:"S&nha@2026",security_question:"Qual o nome da sua primeira escola ou animal de estimação?",security_answer:"planner",role_level:"master",name:"Carlos Santana",phone:"16993669115",role:"Responsável por O Leitor · apoio em O Lobby e Lime Verso"},
+{id:"c3333333-3333-3333-3333-333333333333",username:"Will",password:"S&nha@123",security_question:"Qual a sua cor favorita?",security_answer:"azul",role_level:"moderator",name:"Willian Gonçalves",phone:"1693575472",role:"Responsável por Harvast Words · apoio em O Lobby"},
+{id:"b2222222-2222-2222-2222-222222222222",username:"Davi",password:"S&nha@123",security_question:"Qual o nome da sua cidade natal?",security_answer:"franca",role_level:"user",name:"Davi Silveira",phone:"35999976395",role:"Responsável por Lime Verso · apoio em O Lobby"}];
 let tasks=[
 {id:"1",project:"harvast",title:"Conectando o jogo online",desc:"Implementar e estruturar a conexão online do jogo.",status:"andamento",start:"2026-05-24",end:"2026-07-06",members:["c3333333-3333-3333-3333-333333333333"]},
 {id:"2",project:"leitor",title:"Globalização",desc:"Trabalhar a globalização e expansão do projeto.",status:"pausado",start:"2026-05-18",end:"2026-06-01",members:["a1111111-1111-1111-1111-111111111111"]},
@@ -983,18 +1048,34 @@ function initials(name){if(!name)return "??";return name.split(" ").filter(Boole
 function dates(s,e){if(!s&&!e)return"Sem data";if(s&&!e)return s;if(!s&&e)return e;return`${s} - ${e}`;}
 
 function getActiveMember() {
-  let activeProfileKey = (document.getElementById("profileSelect")?.value || "carlos").toLowerCase();
-  return members.find(m => (m.username && m.username.toLowerCase() === activeProfileKey) || m.id.toLowerCase().includes(activeProfileKey) || (m.name && m.name.toLowerCase().includes(activeProfileKey))) || members[0];
+  if (currentMemberId) {
+    let m = members.find(x => x.id === currentMemberId);
+    if (m) return m;
+  }
+  if (currentProfile) {
+    let pk = currentProfile.toLowerCase();
+    let m = members.find(x => (x.username && x.username.toLowerCase() === pk) || x.id.toLowerCase().includes(pk) || (x.name && x.name.toLowerCase().includes(pk)));
+    if (m) return m;
+  }
+  return members[0];
 }
 
 function isMasterAdmin() {
   let m = getActiveMember();
-  return m && (m.role_level === 'master' || m.username === 'Carlos' || m.name.includes('Carlos'));
+  if (!m) return false;
+  let uname = (m.username || "").toLowerCase();
+  let name = (m.name || "").toLowerCase();
+  return m.role_level === 'master' || uname === 'carlos' || name.includes('carlos');
 }
 
 function isModeratorOrMaster() {
   let m = getActiveMember();
-  return m && (m.role_level === 'master' || m.role_level === 'moderator' || m.username === 'Carlos' || m.username === 'Will' || m.name.includes('Carlos') || m.name.includes('Willian'));
+  if (!m) return false;
+  let uname = (m.username || "").toLowerCase();
+  let name = (m.name || "").toLowerCase();
+  return m.role_level === 'master' || m.role_level === 'moderator' || 
+         uname === 'carlos' || uname === 'will' || 
+         name.includes('carlos') || name.includes('willian');
 }
 
 async function init(){
@@ -1003,8 +1084,37 @@ async function init(){
     if(el) el.src=LOGO;
   });
 
-  // Exige autenticação por senha antes de carregar e exibir qualquer informação
+  // Carrega os dados mais recentes do Supabase (membros/projetos) para validação
+  await loadBaseData();
+
+  // Exige autenticação por senha antes de carregar tarefas e exibir a interface
   requestInitialAuth();
+}
+
+function updateAuthUI() {
+  const userHeader = document.getElementById("userHeaderContainer");
+  const adminSec = document.getElementById("adminSection");
+  const toolbarSec = document.getElementById("toolbarSection");
+
+  if (isAuthenticated) {
+    if (userHeader) userHeader.style.display = "flex";
+    if (adminSec) adminSec.style.display = isModeratorOrMaster() ? "block" : "none";
+    if (toolbarSec) toolbarSec.style.display = "flex";
+
+    const activeMember = getActiveMember();
+    const nameEl = document.getElementById("profileNameDisplay");
+    if (nameEl && activeMember) {
+      nameEl.textContent = activeMember.name;
+    }
+    const avatar = document.getElementById("profileAvatar");
+    if (avatar && activeMember) {
+      avatar.textContent = initials(activeMember.name);
+    }
+  } else {
+    if (userHeader) userHeader.style.display = "none";
+    if (adminSec) adminSec.style.display = "none";
+    if (toolbarSec) toolbarSec.style.display = "none";
+  }
 }
 
 function requestInitialAuth() {
@@ -1012,17 +1122,12 @@ function requestInitialAuth() {
   if (savedSession) {
     try {
       const data = JSON.parse(savedSession);
-      if (data && data.profileId && profiles[data.profileId]) {
-        currentProfile = data.profileId;
+      if (data && data.memberId) {
         currentMemberId = data.memberId;
+        currentProfile = data.profileId || data.username;
         isAuthenticated = true;
 
-        const profileSelect = document.getElementById("profileSelect");
-        if (profileSelect) profileSelect.value = currentProfile;
-
-        const avatar = document.getElementById("profileAvatar");
-        if (avatar && profiles[currentProfile]) avatar.textContent = profiles[currentProfile].initials;
-
+        updateAuthUI();
         loadBaseData();
         loadTasks();
         return;
@@ -1032,17 +1137,19 @@ function requestInitialAuth() {
     }
   }
 
-  const profileSelect = document.getElementById("profileSelect");
-  if (profileSelect) profileSelect.value = currentProfile;
+  isAuthenticated = false;
+  updateAuthUI();
   
-  pendingProfileId = currentProfile;
-  const profile = profiles[currentProfile];
-  
-  document.getElementById("loginModalTitle").textContent = "Autenticação Obrigatória";
-  document.getElementById("loginModalSub").textContent = `Bem-vindo ao Planner. Digite a senha para acessar como ${profile.name}:`;
+  document.getElementById("loginModalTitle").textContent = "Autenticação do Sistema";
+  document.getElementById("loginModalSub").textContent = "Digite seu usuário e senha para acessar o Planner:";
+  if (document.getElementById("loginUserInput")) document.getElementById("loginUserInput").value = "";
   document.getElementById("loginPasswordInput").value = "";
   show("loginModal");
-  setTimeout(() => document.getElementById("loginPasswordInput").focus(), 150);
+  setTimeout(() => {
+    const userInp = document.getElementById("loginUserInput");
+    if (userInp) userInp.focus();
+    else document.getElementById("loginPasswordInput").focus();
+  }, 150);
 }
 
 async function loadBaseData() {
@@ -1108,6 +1215,13 @@ async function loadTasks() {
 }
 
 function fill(){
+  if (!isAuthenticated) {
+    document.getElementById("projects").innerHTML = "";
+    document.getElementById("statusFilter").innerHTML = '<option value="">Todos os status</option>';
+    document.getElementById("memberFilter").innerHTML = '<option value="">Todos os membros</option>';
+    return;
+  }
+
   let visibleProjects = getVisibleProjects();
   document.getElementById("projects").innerHTML=visibleProjects.map(p=>`<button class="project ${selectedProject==p.id?"active":""}" onclick="selectProject('${p.id}')"><div class="project-icon" style="background:${p.color || '#4a4f5d'}">${p.icon || '📁'}</div><div class="project-name">${esc(p.name)}</div></button>`).join("");
   document.getElementById("statusFilter").innerHTML='<option value="">Todos os status</option>'+STATUSES.map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
@@ -1122,6 +1236,26 @@ function selectProject(id){selectedProject=id;fill();render()}
 let selectedTaskIds = new Set();
 
 function render(){
+  if (!isAuthenticated) {
+    document.getElementById("board").innerHTML = `
+      <div style="grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; padding: 40px 20px;">
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 40px; max-width: 440px; width: 100%; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); display: flex; flex-direction: column; align-items: center; gap: 16px;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(99, 102, 241, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 8px;">
+            🔒
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; color: #1e293b; margin: 0;">Sessão Encerrada</h2>
+          <p style="font-size: 14px; color: #64748b; margin: 0; line-height: 1.5;">
+            Sua sessão no Planner não está ativa. Clique no botão abaixo para fazer login e acessar suas tarefas.
+          </p>
+          <button type="button" class="btn primary" style="width: 100%; padding: 12px 24px; font-size: 15px; font-weight: 600; margin-top: 8px; border-radius: 8px; cursor: pointer;" onclick="requestInitialAuth()">
+            🔑 Fazer Login
+          </button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
   let q=document.getElementById("search").value.toLowerCase(),sf=document.getElementById("statusFilter").value,mf=document.getElementById("memberFilter").value;
   let targetProj = PROJECTS.find(p => p.id === selectedProject || p.slug === selectedProject);
 
@@ -1305,12 +1439,29 @@ function renderTeam(){
   }).join(""):`<div class="team-empty">Nenhum membro corresponde à pesquisa.</div>`;
 }
 
-function openChangePasswordModal(){
+window.openChangePasswordModal = function(){
   document.getElementById("oldPasswordInput").value = "";
   document.getElementById("newPasswordInput").value = "";
   document.getElementById("confirmPasswordInput").value = "";
   show("changePasswordModal");
-}
+};
+function openChangePasswordModal(){ window.openChangePasswordModal(); }
+
+window.logout = function() {
+  localStorage.removeItem("planner_remembered_session");
+  isAuthenticated = false;
+  currentProfile = null;
+  pendingProfileId = "carlos";
+  currentMemberId = null;
+  
+  if (window.closeUserDropdown) window.closeUserDropdown();
+  closeModal("loginModal");
+  fill();
+  render();
+  toast("Sessão encerrada com sucesso.");
+  requestInitialAuth();
+};
+function logout(){ window.logout(); }
 
 async function submitChangePassword(){
   let oldPass = document.getElementById("oldPasswordInput").value.trim();
@@ -1327,6 +1478,10 @@ async function submitChangePassword(){
   let activeMem = getActiveMember();
   if (!activeMem) {
     return toast("Erro ao identificar usuário ativo.");
+  }
+
+  if (activeMem.password && activeMem.password !== oldPass) {
+    return toast("Senha antiga incorreta.");
   }
 
   if (window.PlannerDataService && window.PlannerDataService.MembersService.changePassword) {
@@ -1347,23 +1502,21 @@ async function submitChangePassword(){
     }
   }
 
-  // Fallback local se não conectado ao Supabase
-  if (activeMem.password && activeMem.password !== oldPass) {
-    return toast("Senha antiga incorreta.");
-  }
-
   activeMem.password = newPass;
   let mObj = members.find(x => x.id === activeMem.id);
   if (mObj) mObj.password = newPass;
   closeModal("changePasswordModal");
   toast("Senha alterada com sucesso!");
 }
+
 function openMember(id=""){
   let m=id&&members.find(x=>x.id==id);
   document.getElementById("memberTitle").textContent=m?"Editar membro":"Adicionar membro";
   document.getElementById("memberId").value=id;
   document.getElementById("memberName").value=m?.name||"";
   document.getElementById("memberRole").value=m?.role||"";
+  document.getElementById("memberSecurityQuestion").value=m?.security_question||"";
+  document.getElementById("memberSecurityAnswer").value=m?.security_answer||"";
 
   // Renderiza a lista de projetos permitindo vincular/desvincular o membro
   let projectsEl = document.getElementById("memberProjects");
@@ -1385,13 +1538,17 @@ function editMember(id){openMember(id)}
 async function saveMember(){
   let name=document.getElementById("memberName").value.trim();
   if(!name)return toast("Informe o nome.");
-  let id=document.getElementById("memberId").value || "m" + Date.now();
   let role=document.getElementById("memberRole").value.trim();
+  let security_question=document.getElementById("memberSecurityQuestion").value.trim();
+  let security_answer=document.getElementById("memberSecurityAnswer").value.trim();
+  let id=document.getElementById("memberId").value || "m" + Date.now();
   let selectedProjectIds = [...document.querySelectorAll("#memberProjects input:checked")].map(x => x.value);
 
   let targetMember = id && members.find(x=>x.id==id);
   if (targetMember) {
-    let isTargetCarlos = targetMember.username === 'Carlos' || targetMember.name.includes('Carlos');
+    let uName = (targetMember.username || "").toLowerCase();
+    let mName = (targetMember.name || "").toLowerCase();
+    let isTargetCarlos = uName === 'carlos' || mName.includes('carlos');
     if (isTargetCarlos && !isMasterAdmin()) {
       return toast("Ação bloqueada: Apenas o Administrador Master (Carlos Santana) pode alterar o perfil de Carlos.");
     }
@@ -1409,7 +1566,13 @@ async function saveMember(){
 
   if (window.PlannerDataService) {
     try {
-      await window.PlannerDataService.MembersService.saveMember({id: id, name, role});
+      await window.PlannerDataService.MembersService.saveMember({
+        id: id, 
+        name, 
+        role,
+        security_question,
+        security_answer
+      });
       await loadBaseData();
       closeModal("memberModal");
       toast("Membro e projetos salvos no Supabase.");
@@ -1423,8 +1586,10 @@ async function saveMember(){
   if(m){
     m.name=name;
     m.role=role;
+    m.security_question=security_question;
+    m.security_answer=security_answer;
   }else{
-    members.push({id, name, role});
+    members.push({id, name, role, security_question, security_answer});
   }
   closeModal("memberModal");
   fill();
@@ -1490,14 +1655,30 @@ function cancelProfileLogin(){
   pendingProfileId = null;
 }
 
-function toggleUserDropdown(e) {
-  if (e) e.stopPropagation();
+window.toggleUserDropdown = function(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
   const menu = document.getElementById("userDropdownMenu");
-  const btn = e ? e.currentTarget : null;
+  const btn = document.querySelector(".btn-user-menu");
   if (!menu) return;
-  menu.classList.toggle("show");
-  if (btn) btn.classList.toggle("active", menu.classList.contains("show"));
-}
+  const isShown = menu.classList.contains("show");
+  if (isShown) {
+    menu.classList.remove("show");
+    if (btn) btn.classList.remove("active");
+  } else {
+    menu.classList.add("show");
+    if (btn) btn.classList.add("active");
+  }
+};
+
+window.closeUserDropdown = function() {
+  const menu = document.getElementById("userDropdownMenu");
+  const btn = document.querySelector(".btn-user-menu");
+  if (menu) menu.classList.remove("show");
+  if (btn) btn.classList.remove("active");
+};
 
 function toggleBucketDropdown(e, bucketId) {
   if (e) e.stopPropagation();
@@ -1648,63 +1829,74 @@ function togglePasswordVisibility(inputId, btnEl) {
   }
 }
 
-function logout() {
-  localStorage.removeItem("planner_remembered_session");
-  isAuthenticated = false;
-  currentProfile = "carlos";
-  pendingProfileId = "carlos";
-  currentMemberId = "a1111111-1111-1111-1111-111111111111";
-  toast("Sessão encerrada com sucesso.");
-  requestInitialAuth();
-}
+
 
 async function submitProfileLogin(){
-  if (!pendingProfileId) return closeModal("loginModal");
-  let inputPass = document.getElementById("loginPasswordInput").value.trim();
+  let inputUser = (document.getElementById("loginUserInput")?.value || "").trim().toLowerCase();
+  let inputPass = (document.getElementById("loginPasswordInput")?.value || "").trim();
   let rememberMe = document.getElementById("rememberMeInput")?.checked;
 
-  // Encontra as credenciais do perfil solicitado em members
+  if (!inputUser) {
+    toast("Por favor, digite o nome de usuário ou e-mail.");
+    if (document.getElementById("loginUserInput")) document.getElementById("loginUserInput").focus();
+    return;
+  }
+  if (!inputPass) {
+    toast("Por favor, digite a senha.");
+    document.getElementById("loginPasswordInput").focus();
+    return;
+  }
+
+  // Tenta recarregar a lista atualizada de membros do Supabase se disponível
+  if (window.PlannerDataService && window.PlannerDataService.MembersService) {
+    try {
+      let freshMembers = await window.PlannerDataService.MembersService.fetchMembers();
+      if (freshMembers && freshMembers.length > 0) members = freshMembers;
+    } catch(e) {}
+  }
+
+  // Busca membro que coincida por username, id ou nome
   let targetMember = members.find(m => {
-    let pKey = pendingProfileId.toLowerCase();
-    return (m.username && m.username.toLowerCase() === pKey) || m.id.toLowerCase().includes(pKey) || (m.name && m.name.toLowerCase().includes(pKey));
+    let u = (m.username || "").toLowerCase();
+    let n = (m.name || "").toLowerCase();
+    let id = (m.id || "").toLowerCase();
+    return u === inputUser || n === inputUser || id.includes(inputUser);
   });
 
-  let validPass = targetMember ? targetMember.password : null;
+  if (!targetMember) {
+    toast("Usuário não encontrado! Verifique o nome digitado.");
+    return;
+  }
 
-  if (!validPass || inputPass !== validPass) {
+  if (targetMember.password !== inputPass) {
     toast("Senha incorreta! Acesso negado.");
     document.getElementById("loginPasswordInput").value = "";
     document.getElementById("loginPasswordInput").focus();
     return;
   }
 
-  // Senha correta: Ativa o perfil
-  const id = pendingProfileId;
-  const profile = profiles[id];
-  currentProfile = id;
+  // Credenciais válidas
+  currentMemberId = targetMember.id;
+  currentProfile = targetMember.username ? targetMember.username.toLowerCase() : targetMember.id;
   isAuthenticated = true;
-
-  if (id === "carlos") currentMemberId = "a1111111-1111-1111-1111-111111111111";
-  else if (id === "davi") currentMemberId = "b2222222-2222-2222-2222-222222222222";
-  else if (id === "willian") currentMemberId = "c3333333-3333-3333-3333-333333333333";
 
   if (rememberMe) {
     localStorage.setItem("planner_remembered_session", JSON.stringify({
-      profileId: id,
+      username: targetMember.username,
+      profileId: currentProfile,
       memberId: currentMemberId
     }));
   } else {
     localStorage.removeItem("planner_remembered_session");
   }
 
-  const avatar = document.getElementById("profileAvatar");
-  if(avatar) avatar.textContent = profile.initials;
-  
+  updateAuthUI();
   closeModal("loginModal");
-  toast(`Autenticado com sucesso! Perfil ativo: ${profile.name}`);
+  toast(`Autenticado com sucesso! Bem-vindo(a), ${targetMember.name}.`);
 
   // Carregar dados e inscrever no Supabase Realtime
   await loadBaseData();
+  await loadTasks();
   await loadTasks();
 
   if (window.PlannerDataService && window.PlannerDataService.RealtimeService && !window.hasSubscribedRealtime) {
@@ -1717,12 +1909,152 @@ async function submitProfileLogin(){
   }
 }
 
+let activeSMSCode = null;
+
+function maskPhoneNumber(phone) {
+  if (!phone) return "";
+  let digits = phone.replace(/\D/g, "");
+  if (digits.length < 4) return "****";
+  let last4 = digits.slice(-4);
+  return `(**) *****-${last4}`;
+}
+
+function findMemberByUserKey(userKey) {
+  if (!userKey) return members[0];
+  let pk = userKey.toLowerCase();
+  return members.find(x => 
+    x.id === userKey ||
+    (x.username && x.username.toLowerCase() === pk) || 
+    x.id.toLowerCase().includes(pk) || 
+    (x.name && x.name.toLowerCase().includes(pk))
+  ) || members[0];
+}
+
+function onResetUserChange(userKey) {
+  let m = findMemberByUserKey(userKey);
+  let qEl = document.getElementById("displayedSecurityQuestion");
+  let aInp = document.getElementById("resetSecurityAnswerInput");
+  if (aInp) aInp.value = "";
+  if (qEl) {
+    qEl.textContent = m?.security_question || "Nenhuma pergunta secreta cadastrada para este usuário.";
+  }
+}
+
+async function openForgotPasswordModal() {
+  // Atualiza a lista de membros do Supabase se disponível
+  if (window.PlannerDataService && window.PlannerDataService.MembersService) {
+    try {
+      let freshMembers = await window.PlannerDataService.MembersService.fetchMembers();
+      if (freshMembers && freshMembers.length > 0) members = freshMembers;
+    } catch(e) {}
+  }
+
+  const userSelect = document.getElementById("resetUserSelect");
+  if (userSelect) {
+    userSelect.innerHTML = members.map(m => `<option value="${m.id}">${esc(m.name)}</option>`).join("");
+    if (members.length > 0) {
+      userSelect.value = members[0].id;
+    }
+  }
+
+  let initialKey = userSelect ? userSelect.value : (members[0]?.id || "");
+  onResetUserChange(initialKey);
+
+  document.getElementById("secretQuestionStep1").style.display = "block";
+  document.getElementById("secretQuestionStep2").style.display = "none";
+  document.getElementById("btnSubmitResetPassword").style.display = "none";
+  document.getElementById("resetSecurityAnswerInput").value = "";
+  document.getElementById("resetNewPasswordInput").value = "";
+  document.getElementById("resetConfirmPasswordInput").value = "";
+
+  show("forgotPasswordModal");
+}
+
+function verifySecretAnswer() {
+  let selectedProfileKey = document.getElementById("resetUserSelect").value;
+  let typedAnswer = document.getElementById("resetSecurityAnswerInput").value.trim().toLowerCase();
+  let targetMember = findMemberByUserKey(selectedProfileKey);
+  let storedAnswer = (targetMember?.security_answer || "").trim().toLowerCase();
+
+  if (!typedAnswer) {
+    return toast("Digite a resposta secreta para verificação.");
+  }
+
+  if (!storedAnswer) {
+    return toast("Este usuário não possui uma resposta secreta cadastrada.");
+  }
+
+  if (typedAnswer !== storedAnswer) {
+    return toast("Resposta secreta incorreta! Tente novamente.");
+  }
+
+  document.getElementById("secretQuestionStep1").style.display = "none";
+  document.getElementById("secretQuestionStep2").style.display = "block";
+  document.getElementById("btnSubmitResetPassword").style.display = "inline-block";
+
+  toast("Resposta secreta confirmada! Digite sua nova senha.");
+}
+
+async function submitForgotPasswordReset() {
+  let selectedProfileKey = document.getElementById("resetUserSelect").value;
+  let newPass = document.getElementById("resetNewPasswordInput").value.trim();
+  let confirmPass = document.getElementById("resetConfirmPasswordInput").value.trim();
+
+  if (!newPass || !confirmPass) {
+    return toast("Informe e confirme a nova senha.");
+  }
+  if (newPass !== confirmPass) {
+    return toast("As senhas informadas não coincidem.");
+  }
+
+  // Identifica o membro correspondente e atualiza a senha
+  let targetMember = findMemberByUserKey(selectedProfileKey);
+
+  if (targetMember) {
+    targetMember.password = newPass;
+  }
+
+  if (window.PlannerDataService) {
+    try {
+      let memberIdToUpdate = targetMember ? targetMember.id : (selectedProfileKey === "carlos" ? "a1111111-1111-1111-1111-111111111111" : null);
+      if (memberIdToUpdate) {
+        await window.PlannerDataService.MembersService.changePassword(memberIdToUpdate, "", newPass);
+      }
+    } catch(e) {
+      console.error("Erro ao atualizar senha no Supabase:", e);
+    }
+  }
+
+  closeModal("forgotPasswordModal");
+  toast(`Senha redefinida com sucesso para ${targetMember?.name || selectedProfileKey}!`);
+  
+  if (document.getElementById("loginUserInput") && targetMember) {
+    document.getElementById("loginUserInput").value = targetMember.username || targetMember.name;
+  }
+  if (document.getElementById("loginPasswordInput")) {
+    document.getElementById("loginPasswordInput").value = newPass;
+    document.getElementById("loginPasswordInput").focus();
+  }
+}
+
 function openProjectModal(){
+  if (!isAuthenticated) {
+    return toast("Autenticação necessária para gerenciar projetos.");
+  }
+  if (!isModeratorOrMaster()) {
+    return toast("Acesso negado: apenas Moderadores e Administradores podem acessar esta seção.");
+  }
   renderProjectManageList();
   show("projectManageModal");
 }
 
 function openTeamModal(){
+  if (!isAuthenticated) {
+    return toast("Autenticação necessária para gerenciar equipe.");
+  }
+  if (!isModeratorOrMaster()) {
+    return toast("Acesso negado: apenas Moderadores e Administradores podem acessar esta seção.");
+  }
   openTeam();
 }
 

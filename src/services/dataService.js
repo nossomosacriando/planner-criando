@@ -192,8 +192,11 @@ export const MembersService = {
     if (member.username) payload.username = member.username;
     if (member.password) payload.password = member.password;
     if (member.role_level) payload.role_level = member.role_level;
+    if (member.phone !== undefined) payload.phone = member.phone;
+    if (member.security_question !== undefined) payload.security_question = member.security_question;
+    if (member.security_answer !== undefined) payload.security_answer = member.security_answer;
 
-    if (member.id) {
+    if (member.id && !member.id.startsWith("m")) {
       const { data, error } = await supabase
         .from('members')
         .update(payload)
@@ -203,6 +206,9 @@ export const MembersService = {
       if (error) throw error;
       return data;
     } else {
+      if (member.id && member.id.startsWith("m")) {
+        delete member.id;
+      }
       const { data, error } = await supabase
         .from('members')
         .insert([payload])
@@ -227,7 +233,7 @@ export const MembersService = {
       return { success: false, message: "Membro não encontrado." };
     }
 
-    if (member.password !== oldPassword) {
+    if (oldPassword && member.password && member.password !== oldPassword) {
       return { success: false, message: "Senha antiga incorreta." };
     }
 
