@@ -11,9 +11,19 @@ CREATE TABLE IF NOT EXISTS public.projects (
     name TEXT NOT NULL,
     icon TEXT DEFAULT '📁',
     color TEXT DEFAULT '#3b82f6',
+    owner_id UUID REFERENCES public.members(id) ON DELETE SET NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+-- 1b. PROJECT MEMBERS (N:M relationship)
+CREATE TABLE IF NOT EXISTS public.project_members (
+    project_id UUID REFERENCES public.projects(id) ON DELETE CASCADE,
+    member_id UUID REFERENCES public.members(id) ON DELETE CASCADE,
+    role TEXT DEFAULT 'member',
+    PRIMARY KEY (project_id, member_id)
+);
+
 
 -- 2. MEMBERS
 CREATE TABLE IF NOT EXISTS public.members (
@@ -73,7 +83,9 @@ CREATE TRIGGER update_tasks_updated_at BEFORE UPDATE ON public.tasks FOR EACH RO
 
 -- Enable Supabase Realtime for public tables
 ALTER PUBLICATION supabase_realtime ADD TABLE public.projects;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.project_members;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.members;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.tasks;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.task_members;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.activity_log;
+

@@ -4,6 +4,7 @@
 
 -- Enable Row Level Security (RLS) on all tables
 ALTER TABLE public.projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.project_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.tasks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.task_members ENABLE ROW LEVEL SECURITY;
@@ -28,6 +29,30 @@ CREATE POLICY "Allow authenticated update on projects"
 ON public.projects FOR UPDATE
 TO authenticated
 USING (true);
+
+-- ------------------------------------------------
+-- 1b. PROJECT_MEMBERS POLICIES
+-- ------------------------------------------------
+CREATE POLICY "Allow authenticated read on project_members"
+ON public.project_members FOR SELECT
+TO authenticated
+USING (true);
+
+CREATE POLICY "Allow authenticated insert on project_members"
+ON public.project_members FOR INSERT
+TO authenticated
+WITH CHECK (true);
+
+CREATE POLICY "Allow authenticated update on project_members"
+ON public.project_members FOR UPDATE
+TO authenticated
+USING (true);
+
+CREATE POLICY "Allow authenticated delete on project_members"
+ON public.project_members FOR DELETE
+TO authenticated
+USING (true);
+
 
 -- ------------------------------------------------
 -- 2. MEMBERS POLICIES

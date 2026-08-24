@@ -2,19 +2,33 @@
 -- CRIANDO PLANNER - SEED INITIAL DATA
 -- ================================================
 
--- Insert default projects
-INSERT INTO public.projects (id, name, icon, color) VALUES
-('11111111-1111-1111-1111-111111111111', 'Lançamento App Criando', '🚀', '#2563eb'),
-('22222222-2222-2222-2222-222222222222', 'Marketing & Redes', '📢', '#ec4899'),
-('33333333-3333-3333-3333-333333333333', 'Infraestrutura Cloud', '☁️', '#10b981')
-ON CONFLICT (id) DO NOTHING;
-
 -- Insert default members
 INSERT INTO public.members (id, name, role, avatar) VALUES
 ('a1111111-1111-1111-1111-111111111111', 'Carlos Santana', 'Tech Lead', 'CS'),
 ('b2222222-2222-2222-2222-222222222222', 'Davi Silveira', 'Fullstack Developer', 'DS'),
 ('c3333333-3333-3333-3333-333333333333', 'Willian Gonçalves', 'Product Owner', 'WG')
 ON CONFLICT (id) DO NOTHING;
+
+-- Insert default projects (Willian = Owner do Harvast / Carlos = Owner dos demais)
+INSERT INTO public.projects (id, name, icon, color, owner_id) VALUES
+('11111111-1111-1111-1111-111111111111', 'Harvast Words', '🎮', '#2563eb', 'c3333333-3333-3333-3333-333333333333'),
+('22222222-2222-2222-2222-222222222222', 'O Leitor', '📖', '#ec4899', 'a1111111-1111-1111-1111-111111111111'),
+('33333333-3333-3333-3333-333333333333', 'O Lobby', '👤', '#10b981', 'a1111111-1111-1111-1111-111111111111'),
+('44444444-4444-4444-4444-444444444444', 'Lime Verso', '🌿', '#8b5cf6', 'a1111111-1111-1111-1111-111111111111')
+ON CONFLICT (id) DO NOTHING;
+
+-- Assign default project members
+INSERT INTO public.project_members (project_id, member_id, role) VALUES
+('11111111-1111-1111-1111-111111111111', 'c3333333-3333-3333-3333-333333333333', 'owner'),
+('11111111-1111-1111-1111-111111111111', 'a1111111-1111-1111-1111-111111111111', 'member'),
+('22222222-2222-2222-2222-222222222222', 'a1111111-1111-1111-1111-111111111111', 'owner'),
+('33333333-3333-3333-3333-333333333333', 'a1111111-1111-1111-1111-111111111111', 'owner'),
+('33333333-3333-3333-3333-333333333333', 'b2222222-2222-2222-2222-222222222222', 'member'),
+('33333333-3333-3333-3333-333333333333', 'c3333333-3333-3333-3333-333333333333', 'member'),
+('44444444-4444-4444-4444-444444444444', 'a1111111-1111-1111-1111-111111111111', 'owner'),
+('44444444-4444-4444-4444-444444444444', 'b2222222-2222-2222-2222-222222222222', 'member')
+ON CONFLICT DO NOTHING;
+
 
 -- Insert initial tasks
 INSERT INTO public.tasks (id, project_id, title, description, status, start_date, end_date, created_by) VALUES

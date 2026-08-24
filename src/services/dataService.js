@@ -63,22 +63,111 @@ export const ProjectsService = {
   async fetchProjects() {
     const supabase = getSupabase();
     if (!supabase) return [];
-    const { data, error } = await supabase.from('projects').select('*').order('name');
+    
+    const { data, error } = await supabase
+      .from('projects')
+      .select(`
+        *,
+        project_members ( member_id, role )
+      `)
+      .order('name');
+
     if (error) {
       console.error("Erro ao buscar projetos:", error);
       return [];
     }
-    return data;
+
+    return data.map(p => ({
+      ...p,
+      members: p.project_members ? p.project_members.map(pm => pm.member_id) : []
+    }));
   },
 
-  async createProject(project) {
+  async saveProject(projectData, currentMemberId) {
     const supabase = getSupabase();
     if (!supabase) return null;
-    const { data, error } = await supabase.from('projects').insert([project]).select().single();
+
+    const payload = {
+      name: projectData.name,
+      icon: projectData.icon || '📁',
+      color: projectData.color || '#3b82f6',
+      owner_id: projectData.owner_id || currentMemberId
+    };
+
+    let projectId = projectData.id;
+
+    if (projectId) {
+      const { data, error } = await supabase
+        .from('projects')
+        .update(payload)
+        .eq('id', projectId)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Atualiza associações de membros no project_members
+      await supabase.from('project_members').delete().eq('project_id', projectId);
+      
+      const memberRows = [];
+      if (projectData.members && projectData.members.length > 0) {
+        projectData.members.forEach(mId => {
+          memberRows.push({
+            project_id: projectId,
+            member_id: mId,
+            role: mId === payload.owner_id ? 'owner' : 'member'
+          });
+        });
+      }
+      
+      // Garante que o owner esteja na lista de membros do projeto
+      if (!memberRows.find(m => m.member_id === payload.owner_id)) {
+        memberRows.push({
+          project_id: projectId,
+          member_id: payload.owner_id,
+          role: 'owner'
+        });
+      }
+
+      await supabase.from('project_members').insert(memberRows);
+      return data;
+    } else {
+      payload.owner_id = currentMemberId;
+      const { data, error } = await supabase.from('projects').insert([payload]).select().single();
+      if (error) throw error;
+
+      const memberRows = [];
+      if (projectData.members && projectData.members.length > 0) {
+        projectData.members.forEach(mId => {
+          memberRows.push({
+            project_id: data.id,
+            member_id: mId,
+            role: mId === currentMemberId ? 'owner' : 'member'
+          });
+        });
+      }
+
+      if (!memberRows.find(m => m.member_id === currentMemberId)) {
+        memberRows.push({
+          project_id: data.id,
+          member_id: currentMemberId,
+          role: 'owner'
+        });
+      }
+
+      await supabase.from('project_members').insert(memberRows);
+      return data;
+    }
+  },
+
+  async deleteProject(projectId) {
+    const supabase = getSupabase();
+    if (!supabase) return;
+    const { error } = await supabase.from('projects').delete().eq('id', projectId);
     if (error) throw error;
-    return data;
   }
 };
+
 
 // ------------------------------------------------
 // 3. MEMBERS SERVICE

@@ -507,6 +507,7 @@
   <div class="brand-side"><img id="sideLogo"><div><div class="brand-word">CRIANDO</div><div class="brand-sub">PLANNER</div></div></div>
   <div class="section-title">Projetos</div><div id="projects"></div>
   <div class="section-title">Administração</div>
+  <button class="team-btn" onclick="openProjectModal()"><div class="team-icon">⚙️</div><span>Gerenciar projetos</span></button>
   <button class="team-btn" onclick="openTeam()"><div class="team-icon">👥</div><span>Gerenciar equipe</span></button>
   <div class="sidebar-footer"><img id="footerLogo"><div><div class="footer-brand">CRIANDO © 2026</div><div class="footer-copy">Tecnologia que cria futuros.</div></div><button class="collapse">‹</button></div>
 </aside>
@@ -534,6 +535,40 @@
 </section>
 <section class="board-wrap"><div id="board" class="board"></div></section>
 </main></div>
+
+<!-- Modal de Gerenciamento e Edição de Projetos -->
+<div id="projectManageModal" class="modal-backdrop" onclick="backdrop(event,'projectManageModal')"><div class="modal large">
+<div class="modal-head team-modal-head">
+  <div class="team-title-wrap">
+    <h2>Gerenciar Projetos</h2>
+    <p>Crie e edite projetos, atribua membros e gerencie proprietários (Owners).</p>
+  </div>
+  <div class="team-head-actions">
+    <button class="btn primary" type="button" onclick="openEditProjectForm()">＋ Criar Projeto</button>
+    <button class="close" type="button" aria-label="Fechar" onclick="closeModal('projectManageModal')">×</button>
+  </div>
+</div>
+<div class="modal-body">
+  <div id="projectManageList" class="member-list team-list"></div>
+</div>
+<div class="modal-foot">
+  <button class="btn" type="button" onclick="closeModal('projectManageModal')">Fechar</button>
+</div>
+</div></div>
+
+<!-- Modal Formulário de Criação/Edição de Projeto -->
+<div id="projectFormModal" class="modal-backdrop" onclick="backdrop(event,'projectFormModal')"><div class="modal">
+<div class="modal-head"><h2 id="projectFormTitle">Editar Projeto</h2><button class="close" type="button" onclick="closeModal('projectFormModal')">×</button></div>
+<div class="modal-body">
+<input type="hidden" id="projectFormId">
+<div class="form-group"><label>Nome do Projeto</label><input id="projectFormName" class="input" placeholder="Ex.: Harvast Words"></div>
+<div class="form-row"><div class="form-group"><label>Ícone (Emoji)</label><input id="projectFormIcon" class="input" placeholder="Ex.: 🎮"></div><div class="form-group"><label>Cor (Hex/Nome)</label><input id="projectFormColor" class="input" placeholder="Ex.: #2563eb"></div></div>
+<div id="ownerGroup" class="form-group"><label>Owner do Projeto (Proprietário)</label><select id="projectFormOwner" class="form-select"></select></div>
+<div class="form-group"><label>Membros Atribuídos de Atuação</label><div id="projectFormMembers" class="member-list"></div></div>
+</div>
+<div class="modal-foot"><button class="btn" type="button" onclick="closeModal('projectFormModal')">Cancelar</button><button class="btn primary" onclick="saveProjectFromModal()">Salvar Projeto</button></div>
+</div></div>
+
 
 <div id="taskModal" class="modal-backdrop" onclick="backdrop(event,'taskModal')"><div class="modal">
 <div class="modal-head"><h2 id="taskModalTitle">Nova tarefa</h2><button class="close" type="button" onclick="closeModal('taskModal')">×</button></div>
@@ -667,12 +702,14 @@ async function loadTasks() {
 }
 
 function fill(){
-  document.getElementById("projects").innerHTML=PROJECTS.map(p=>`<button class="project ${selectedProject==p.id?"active":""}" onclick="selectProject('${p.id}')"><div class="project-icon">${p.icon}</div><div class="project-name">${esc(p.name)}</div></button>`).join("");
+  let visibleProjects = getVisibleProjects();
+  document.getElementById("projects").innerHTML=visibleProjects.map(p=>`<button class="project ${selectedProject==p.id?"active":""}" onclick="selectProject('${p.id}')"><div class="project-icon" style="background:${p.color || '#4a4f5d'}">${p.icon || '📁'}</div><div class="project-name">${esc(p.name)}</div></button>`).join("");
   document.getElementById("statusFilter").innerHTML='<option value="">Todos os status</option>'+STATUSES.map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
   document.getElementById("memberFilter").innerHTML='<option value="">Todos os membros</option>'+members.map(m=>`<option value="${m.id}">${esc(m.name)}</option>`).join("");
-  document.getElementById("taskProject").innerHTML=PROJECTS.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join("");
+  document.getElementById("taskProject").innerHTML=visibleProjects.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join("");
   document.getElementById("taskStatus").innerHTML=STATUSES.map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
 }
+
 
 function selectProject(id){selectedProject=id;fill();render()}
 
@@ -857,21 +894,144 @@ async function deleteMember(id){
 
 function clearFilters(){document.getElementById("search").value="";document.getElementById("statusFilter").value="";document.getElementById("memberFilter").value="";render()}
 
-const profiles={
-  carlos:{name:"Carlos Santana",initials:"CS"},
-  davi:{name:"Davi Silveira",initials:"DS"},
-  willian:{name:"Willian Gonçalves",initials:"WG"}
-};
-let currentProfile="carlos";
+let currentMemberId = "a1111111-1111-1111-1111-111111111111"; // Default Carlos
 
 function changeProfile(id){
   const profile=profiles[id];
   if(!profile)return;
   currentProfile=id;
+
+  // Mapeia perfil para o ID do banco
+  if (id === "carlos") currentMemberId = "a1111111-1111-1111-1111-111111111111";
+  else if (id === "davi") currentMemberId = "b2222222-2222-2222-2222-222222222222";
+  else if (id === "willian") currentMemberId = "c3333333-3333-3333-3333-333333333333";
+
   const avatar=document.getElementById("profileAvatar");
   if(avatar)avatar.textContent=profile.initials;
   toast(`Perfil ativo: ${profile.name}`);
+
+  // Recarregar projetos e filtro visual
+  loadBaseData();
+  loadTasks();
 }
+
+// Filtra projetos por visibilidade (Owner ou Membro Atribuído)
+function getVisibleProjects() {
+  return PROJECTS.filter(p => {
+    let isOwner = p.owner_id === currentMemberId;
+    let isMember = p.members && p.members.includes(currentMemberId);
+    return isOwner || isMember;
+  });
+}
+
+function openProjectModal(){
+  renderProjectManageList();
+  show("projectManageModal");
+}
+
+function renderProjectManageList(){
+  let visibleProjects = getVisibleProjects();
+  let listEl = document.getElementById("projectManageList");
+  if (!listEl) return;
+
+  listEl.innerHTML = visibleProjects.length ? visibleProjects.map(p => {
+    let isOwner = p.owner_id === currentMemberId;
+    let ownerObj = members.find(m => m.id === p.owner_id);
+    let ownerName = ownerObj ? ownerObj.name : "Desconhecido";
+    let assignedCount = p.members ? p.members.length : 0;
+
+    return `<div class="team-member-row">
+      <div class="project-icon" style="background:${p.color || '#3b82f6'}">${p.icon || '📁'}</div>
+      <div class="team-member-main">
+        <div class="team-member-name">${esc(p.name)}</div>
+        <div class="team-member-role">Proprietário: <b>${esc(ownerName)}</b></div>
+        <div class="team-member-meta">
+          <span class="team-chip">${assignedCount} membros atribuídos</span>
+          ${isOwner ? '<span class="team-chip" style="background:#eeebff;color:#5c4bd6">Você é Owner</span>' : '<span class="team-chip">Leitura / Atuação</span>'}
+        </div>
+      </div>
+      <div class="team-member-actions">
+        ${isOwner ? `<button type="button" onclick="openEditProjectForm('${p.id}')">Editar</button>` : `<button type="button" disabled title="Apenas o Owner pode editar o projeto">Sem permissão</button>`}
+      </div>
+    </div>`;
+  }).join("") : `<div class="team-empty">Nenhum projeto disponível para este perfil.</div>`;
+}
+
+function openEditProjectForm(id = null) {
+  let p = id && PROJECTS.find(x => x.id === id);
+  document.getElementById("projectFormTitle").textContent = p ? "Editar Projeto" : "Novo Projeto";
+  document.getElementById("projectFormId").value = id || "";
+  document.getElementById("projectFormName").value = p?.name || "";
+  document.getElementById("projectFormIcon").value = p?.icon || "📁";
+  document.getElementById("projectFormColor").value = p?.color || "#3b82f6";
+
+  // Preenche donos disponíveis
+  let ownerSelect = document.getElementById("projectFormOwner");
+  ownerSelect.innerHTML = members.map(m => `<option value="${m.id}" ${(p?.owner_id || currentMemberId) === m.id ? "selected" : ""}>${esc(m.name)} (${esc(m.role)})</option>`).join("");
+
+  // Apenas o owner pode alterar o dono do projeto
+  let isOwner = !p || p.owner_id === currentMemberId;
+  document.getElementById("ownerGroup").style.display = isOwner ? "block" : "none";
+
+  // Preenche membros para checkbox
+  let membersContainer = document.getElementById("projectFormMembers");
+  membersContainer.innerHTML = members.map(m => {
+    let checked = p?.members?.includes(m.id) || m.id === currentMemberId;
+    return `<label class="member-row"><input type="checkbox" value="${m.id}" ${checked ? "checked" : ""}><div class="avatar" style="width:29px;height:29px;font-size:9px">${initials(m.name)}</div><div class="member-info"><div class="member-name">${esc(m.name)}</div><div class="member-role">${esc(m.role)}</div></div></label>`;
+  }).join("");
+
+  show("projectFormModal");
+}
+
+async function saveProjectFromModal() {
+  let name = document.getElementById("projectFormName").value.trim();
+  if (!name) return toast("Informe o nome do projeto.");
+
+  let id = document.getElementById("projectFormId").value;
+  let icon = document.getElementById("projectFormIcon").value.trim() || "📁";
+  let color = document.getElementById("projectFormColor").value.trim() || "#3b82f6";
+  let owner_id = document.getElementById("projectFormOwner").value;
+  let selectedMembers = [...document.querySelectorAll("#projectFormMembers input:checked")].map(x => x.value);
+
+  let pData = {
+    id: id || null,
+    name,
+    icon,
+    color,
+    owner_id,
+    members: selectedMembers
+  };
+
+  if (window.PlannerDataService) {
+    try {
+      await window.PlannerDataService.ProjectsService.saveProject(pData, currentMemberId);
+      await loadBaseData();
+      closeModal("projectFormModal");
+      renderProjectManageList();
+      toast(id ? "Projeto atualizado no Supabase." : "Projeto criado no Supabase.");
+      return;
+    } catch (e) {
+      console.error("Erro ao salvar projeto no Supabase:", e);
+      toast("Erro ao salvar projeto.");
+      return;
+    }
+  }
+
+  // Fallback local
+  if (id) {
+    let existing = PROJECTS.find(x => x.id === id);
+    if (existing) Object.assign(existing, pData);
+  } else {
+    PROJECTS.push({ id: "p" + Date.now(), ...pData });
+  }
+
+  closeModal("projectFormModal");
+  fill();
+  renderProjectManageList();
+  render();
+  toast(id ? "Projeto atualizado." : "Projeto criado.");
+}
+
 
 function show(id){
   const modal=document.getElementById(id);
