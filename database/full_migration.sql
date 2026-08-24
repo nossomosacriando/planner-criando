@@ -19,8 +19,11 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE public.members (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     auth_user_id UUID UNIQUE REFERENCES auth.users(id) ON DELETE SET NULL,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
     name TEXT NOT NULL,
     role TEXT,
+    role_level TEXT DEFAULT 'user', -- 'master', 'moderator', 'user'
     avatar TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -129,10 +132,10 @@ CREATE PUBLICATION supabase_realtime FOR TABLE public.projects, public.project_m
 -- 6. DADOS INICIAIS (SEED V3 COM OWNERS E INTEGRANTES)
 
 -- Membros
-INSERT INTO public.members (id, name, role, avatar) VALUES
-('a1111111-1111-1111-1111-111111111111', 'Carlos Santana', 'Responsável por O Leitor · apoio em O Lobby e Lime Verso', 'CS'),
-('b2222222-2222-2222-2222-222222222222', 'Davi Silveira', 'Responsável por Lime Verso · apoio em O Lobby', 'DS'),
-('c3333333-3333-3333-3333-333333333333', 'Willian Oliveira', 'Responsável por Harvast Words · apoio em O Lobby', 'WO');
+INSERT INTO public.members (id, username, password, name, role, role_level, avatar) VALUES
+('a1111111-1111-1111-1111-111111111111', 'Carlos', 'S&nha@master', 'Carlos Santana', 'Responsável por O Leitor · apoio em O Lobby e Lime Verso', 'master', 'CS'),
+('b2222222-2222-2222-2222-222222222222', 'Davi', 'S&nha@123', 'Davi Silveira', 'Responsável por Lime Verso · apoio em O Lobby', 'user', 'DS'),
+('c3333333-3333-3333-3333-333333333333', 'Will', 'S&nha@123', 'Willian Oliveira', 'Responsável por Harvast Words · apoio em O Lobby', 'moderator', 'WO');
 
 -- Projetos (Willian = Owner de Harvast Words | Carlos = Owner dos demais)
 INSERT INTO public.projects (id, name, icon, color, owner_id) VALUES

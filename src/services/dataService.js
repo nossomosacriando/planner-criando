@@ -187,10 +187,15 @@ export const MembersService = {
   async saveMember(member) {
     const supabase = getSupabase();
     if (!supabase) return null;
+    let payload = { name: member.name, role: member.role };
+    if (member.username) payload.username = member.username;
+    if (member.password) payload.password = member.password;
+    if (member.role_level) payload.role_level = member.role_level;
+
     if (member.id) {
       const { data, error } = await supabase
         .from('members')
-        .update({ name: member.name, role: member.role })
+        .update(payload)
         .eq('id', member.id)
         .select()
         .single();
@@ -199,12 +204,42 @@ export const MembersService = {
     } else {
       const { data, error } = await supabase
         .from('members')
-        .insert([{ name: member.name, role: member.role }])
+        .insert([payload])
         .select()
         .single();
       if (error) throw error;
       return data;
     }
+  },
+
+  async changePassword(memberId, oldPassword, newPassword) {
+    const supabase = getSupabase();
+    if (!supabase) return { success: false, message: "Cliente de dados não configurado." };
+
+    const { data: member, error: fetchErr } = await supabase
+      .from('members')
+      .select('password')
+      .eq('id', memberId)
+      .single();
+
+    if (fetchErr || !member) {
+      return { success: false, message: "Membro não encontrado." };
+    }
+
+    if (member.password !== oldPassword) {
+      return { success: false, message: "Senha antiga incorreta." };
+    }
+
+    const { error: updateErr } = await supabase
+      .from('members')
+      .update({ password: newPassword })
+      .eq('id', memberId);
+
+    if (updateErr) {
+      return { success: false, message: "Erro ao atualizar senha no banco." };
+    }
+
+    return { success: true, message: "Senha alterada com sucesso!" };
   },
 
   async deleteMember(id) {

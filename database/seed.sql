@@ -3,10 +3,10 @@
 -- ================================================
 
 -- Insert default members
-INSERT INTO public.members (id, name, role, avatar) VALUES
-('a1111111-1111-1111-1111-111111111111', 'Carlos Santana', 'Responsável por O Leitor · apoio em O Lobby e Lime Verso', 'CS'),
-('b2222222-2222-2222-2222-222222222222', 'Davi Silveira', 'Responsável por Lime Verso · apoio em O Lobby', 'DS'),
-('c3333333-3333-3333-3333-333333333333', 'Willian Oliveira', 'Responsável por Harvast Words · apoio em O Lobby', 'WO')
+INSERT INTO public.members (id, username, password, name, role, role_level, avatar) VALUES
+('a1111111-1111-1111-1111-111111111111', 'Carlos', 'S&nha@master', 'Carlos Santana', 'Responsável por O Leitor · apoio em O Lobby e Lime Verso', 'master', 'CS'),
+('b2222222-2222-2222-2222-222222222222', 'Davi', 'S&nha@123', 'Davi Silveira', 'Responsável por Lime Verso · apoio em O Lobby', 'user', 'DS'),
+('c3333333-3333-3333-3333-333333333333', 'Will', 'S&nha@123', 'Willian Oliveira', 'Responsável por Harvast Words · apoio em O Lobby', 'moderator', 'WO')
 ON CONFLICT (id) DO NOTHING;
 
 -- Insert default projects (Willian = Owner do Harvast / Carlos = Owner dos demais)
